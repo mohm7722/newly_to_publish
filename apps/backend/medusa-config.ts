@@ -1,4 +1,4 @@
-import { loadEnv, defineConfig } from '@medusajs/framework/utils'
+import { loadEnv, defineConfig, Modules } from '@medusajs/framework/utils'
 
 loadEnv(process.env.NODE_ENV || 'development', process.cwd())
 
@@ -47,18 +47,22 @@ const useRedis =
 const redisModules = useRedis
   ? [
       {
+        key: Modules.CACHE,
         resolve: "@medusajs/cache-redis",
         options: { redisUrl: process.env.REDIS_URL },
       },
       {
+        key: Modules.EVENT_BUS,
         resolve: "@medusajs/event-bus-redis",
         options: { redisUrl: process.env.REDIS_URL },
       },
       {
+        key: Modules.WORKFLOW_ENGINE,
         resolve: "@medusajs/workflow-engine-redis",
         options: { redis: { url: process.env.REDIS_URL } },
       },
       {
+        key: Modules.LOCKING,
         resolve: "@medusajs/locking",
         options: {
           providers: [
@@ -127,6 +131,7 @@ module.exports = defineConfig({
     // default `static` dir, which `run-server.sh` symlinks to a persistent
     // location so they survive every rebuild.
     {
+      key: Modules.FILE,
       resolve: "@medusajs/file",
       options: {
         providers: [
