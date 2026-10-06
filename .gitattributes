@@ -1,0 +1,6 @@
+# Keep shell scripts and SQL as LF so they run correctly on the Linux server,
+# even when the repo is edited/checked out on Windows.
+*.sh    text eol=lf
+*.bash  text eol=lf
+*.sql   text eol=lf
+run-server.sh text eol=lf

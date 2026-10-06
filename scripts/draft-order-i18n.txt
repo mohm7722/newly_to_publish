@@ -1,0 +1,58 @@
+label: "Drafts"|||label: "المسودّات"
+children: "Create Draft Order"|||children: "إنشاء طلب مسودّة"
+children: "Create a new draft order"|||children: "إنشاء طلب مسودّة جديد"
+jsx(Form$2.Label, { children: "Region" })|||jsx(Form$2.Label, { children: "المنطقة" })
+jsx(Form$2.Hint, { children: "Choose region" })|||jsx(Form$2.Hint, { children: "اختر المنطقة" })
+placeholder: "Select region"|||placeholder: "اختر منطقة"
+jsx(Form$2.Label, { children: "Sales Channel" })|||jsx(Form$2.Label, { children: "قناة البيع" })
+jsx(Form$2.Hint, { children: "Choose sales channel" })|||jsx(Form$2.Hint, { children: "اختر قناة البيع" })
+placeholder: "Select sales channel"|||placeholder: "اختر قناة البيع"
+jsx(Form$2.Label, { optional: true, children: "Customer" })|||jsx(Form$2.Label, { optional: true, children: "العميل" })
+jsx(Form$2.Hint, { children: "Choose an existing customer" })|||jsx(Form$2.Hint, { children: "اختر عميلًا موجودًا" })
+placeholder: "Select customer"|||placeholder: "اختر عميلًا"
+jsx(Form$2.Label, { children: "Email" })|||jsx(Form$2.Label, { children: "البريد الإلكتروني" })
+jsx(Form$2.Hint, { children: "Input a email to associate with the order" })|||jsx(Form$2.Hint, { children: "أدخل بريدًا إلكترونيًا لربطه بالطلب" })
+content: "You cannot change the email when a customer is selected"|||content: "لا يمكنك تغيير البريد الإلكتروني عند اختيار عميل"
+children: type === "shipping_address" ? "Shipping address" : "Billing address"|||children: type === "shipping_address" ? "عنوان الشحن" : "عنوان الفوترة"
+jsx(Form$2.Label, { children: "Same as shipping address" })|||jsx(Form$2.Label, { children: "نفس عنوان الشحن" })
+jsx(Form$2.Hint, { children: "Use the same address for billing and shipping" })|||jsx(Form$2.Hint, { children: "استخدام العنوان نفسه للفوترة والشحن" })
+jsx(Form$2.Label, { optional: true, variant: "subtle", children: "Saved addresses" })|||jsx(Form$2.Label, { optional: true, variant: "subtle", children: "العناوين المحفوظة" })
+jsx(Form$2.Hint, { children: "Choose one of the customers saved addresses." })|||jsx(Form$2.Hint, { children: "اختر أحد عناوين العميل المحفوظة." })
+placeholder: type === "shipping_address" ? "Select shipping address" : "Select billing address"|||placeholder: type === "shipping_address" ? "اختر عنوان الشحن" : "اختر عنوان الفوترة"
+jsx(Form$2.Label, { variant: "subtle", children: "Country" })|||jsx(Form$2.Label, { variant: "subtle", children: "الدولة" })
+jsx(Form$2.Label, { variant: "subtle", children: "First name" })|||jsx(Form$2.Label, { variant: "subtle", children: "الاسم الأول" })
+jsx(Form$2.Label, { variant: "subtle", children: "Last name" })|||jsx(Form$2.Label, { variant: "subtle", children: "اسم العائلة" })
+jsx(Form$2.Label, { optional: true, variant: "subtle", children: "Company" })|||jsx(Form$2.Label, { optional: true, variant: "subtle", children: "الشركة" })
+jsx(Form$2.Label, { variant: "subtle", children: "Address" })|||jsx(Form$2.Label, { variant: "subtle", children: "العنوان" })
+jsx(Form$2.Label, { optional: true, variant: "subtle", children: "Apartment, suite, etc." })|||jsx(Form$2.Label, { optional: true, variant: "subtle", children: "شقة، جناح، إلخ." })
+jsx(Form$2.Label, { variant: "subtle", children: "Postal code" })|||jsx(Form$2.Label, { variant: "subtle", children: "الرمز البريدي" })
+jsx(Form$2.Label, { variant: "subtle", children: "City" })|||jsx(Form$2.Label, { variant: "subtle", children: "المدينة" })
+jsx(Form$2.Label, { optional: true, variant: "subtle", children: "Province / State" })|||jsx(Form$2.Label, { optional: true, variant: "subtle", children: "المحافظة / الولاية" })
+jsx(Form$2.Label, { optional: true, variant: "subtle", children: "Phone" })|||jsx(Form$2.Label, { optional: true, variant: "subtle", children: "الهاتف" })
+Button, { variant: "secondary", size: "small", children: "Cancel" }|||Button, { variant: "secondary", size: "small", children: "إلغاء" }
+Button, { size: "small", children: "Save" }|||Button, { size: "small", children: "حفظ" }
+breadcrumb: () => "Draft Orders"|||breadcrumb: () => "الطلبات المسودّة"
+header: "Display ID"|||header: "رقم العرض"
+header: "Date"|||header: "التاريخ"
+header: "Customer"|||header: "العميل"
+header: "Sales Channel"|||header: "قناة البيع"
+header: "Region"|||header: "المنطقة"
+placeholder: "Search"|||placeholder: "بحث"
+jsx(Heading, { level: "h2", children: "Customer" })|||jsx(Heading, { level: "h2", children: "العميل" })
+leading: "compact", weight: "plus", children: "ID" })|||leading: "compact", weight: "plus", children: "المعرّف" })
+leading: "compact", weight: "plus", children: "Contact" })|||leading: "compact", weight: "plus", children: "وسيلة التواصل" })
+children: type === "shipping" ? "Shipping address" : "Billing address"|||children: type === "shipping" ? "عنوان الشحن" : "عنوان الفوترة"
+children: "Billing address"|||children: "عنوان الفوترة"
+children: "Same as shipping address"|||children: "نفس عنوان الشحن"
+"Draft Order #"|||"طلب مسودّة #"
+jsx(Heading, { level: "h2", children: "Metadata" })|||jsx(Heading, { level: "h2", children: "بيانات وصفية" })
+jsx(Heading, { children: "Summary" })|||jsx(Heading, { children: "الملخّص" })
+jsx(Heading, { children: "Shipping" })|||jsx(Heading, { children: "الشحن" })
+leading: "compact", children: "Shipping" })|||leading: "compact", children: "الشحن" })
+leading: "compact", children: "Discount" })|||leading: "compact", children: "الخصم" })
+leading: "compact", children: "Tax" })|||leading: "compact", children: "الضريبة" })
+leading: "compact", weight: "plus", children: "Total" })|||leading: "compact", weight: "plus", children: "الإجمالي" })
+jsx(Heading, { children: "Activity" })|||jsx(Heading, { children: "النشاط" })
+children: "Convert to order"|||children: "تحويل إلى طلب"
+content: "Draft order created"|||content: "تم إنشاء الطلب المسودّة"
+isSomeProfilesAssigned ? "Edit shipping" : "Add shipping"|||isSomeProfilesAssigned ? "تعديل الشحن" : "إضافة شحن"

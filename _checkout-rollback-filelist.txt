@@ -1,0 +1,13 @@
+apps/backend/src/api/middlewares.ts
+apps/backend/src/api/store/carts/[id]/city-shipping/route.ts
+apps/backend/src/api/store/carts/[id]/shipping-methods/route.ts
+apps/backend/src/migration-scripts/initial-data-seed.ts
+apps/backend/src/modules/settlement/service.ts
+apps/storefront/src/app/[countryCode]/(checkout)/checkout/page.tsx
+apps/storefront/src/app/[countryCode]/(main)/cart/resume/route.ts
+apps/storefront/src/lib/data/cart.ts
+apps/storefront/src/modules/checkout/components/payment-button/index.tsx
+apps/storefront/src/modules/checkout/components/payment/cod-payment.tsx
+apps/storefront/src/modules/checkout/components/payment/index.tsx
+apps/storefront/src/modules/checkout/components/shipping-address/index.tsx
+apps/storefront/src/modules/common/components/radio/index.tsx

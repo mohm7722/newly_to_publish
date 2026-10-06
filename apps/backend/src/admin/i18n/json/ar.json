@@ -1,0 +1,1132 @@
+{
+  "custom": {
+    "common": {
+      "save": "حفظ",
+      "cancel": "إلغاء",
+      "edit": "تعديل",
+      "delete": "حذف",
+      "activate": "تفعيل",
+      "deactivate": "إلغاء التفعيل",
+      "active": "مُفعّل",
+      "inactive": "غير مُفعّل",
+      "inactiveSuffix": " (غير مُفعّلة)",
+      "actions": "إجراءات",
+      "status": "الحالة",
+      "currency": "العملة",
+      "selectCurrency": "اختر عملة",
+      "optional": "(اختياري)"
+    },
+    "currencies": {
+      "SAR": "ريال سعودي (SAR)",
+      "YER_NEW": "ريال يمني – جديد (YER_NEW)",
+      "YER_OLD": "ريال يمني – قديم (YER_OLD)",
+      "SAR_long": "SAR — ريال سعودي",
+      "YER_NEW_long": "YER_NEW — ريال يمني (جديد)",
+      "YER_OLD_long": "YER_OLD — ريال يمني (قديم)"
+    },
+    "bankAccounts": {
+      "label": "الحسابات البنكية",
+      "title": "الحسابات البنكية",
+      "subtitle": "إدارة الحسابات البنكية المتاحة للدفع عبر التحويل البنكي.",
+      "add": "إضافة حساب",
+      "loading": "جارٍ تحميل الحسابات البنكية…",
+      "loadError": "تعذّر تحميل الحسابات البنكية: {{message}}",
+      "empty": "لا توجد حسابات بنكية بعد. أضف حسابًا للبدء.",
+      "colBank": "البنك",
+      "colAccountNumber": "رقم الحساب",
+      "addTitle": "إضافة حساب بنكي",
+      "editTitle": "تعديل الحساب البنكي",
+      "bankName": "اسم البنك",
+      "bankNamePlaceholder": "مثال: بنك الكريمي",
+      "accountNumber": "رقم الحساب",
+      "accountNumberPlaceholder": "مثال: 1234567890",
+      "instructions": "التعليمات (اختياري)",
+      "instructionsPlaceholder": "تعليمات الدفع التي تظهر للعملاء",
+      "activeLabel": "مُفعّل",
+      "createdToast": "تم إنشاء الحساب البنكي",
+      "updatedToast": "تم تحديث الحساب البنكي",
+      "deletedToast": "تم حذف الحساب البنكي",
+      "saveErrorToast": "تعذّر حفظ الحساب البنكي",
+      "toggleErrorToast": "تعذّر تغيير حالة الحساب البنكي",
+      "deleteErrorToast": "تعذّر حذف الحساب البنكي",
+      "deleteTitle": "حذف الحساب البنكي",
+      "deleteConfirm": "هل أنت متأكد من حذف \"{{name}}\"؟ لا يمكن التراجع عن هذا الإجراء."
+    },
+    "cod": {
+      "label": "الدفع عند الاستلام",
+      "title": "الدفع عند الاستلام",
+      "subtitle": "تهيئة توفّر الدفع عند الاستلام وقيود المدن الاختيارية.",
+      "loading": "جارٍ تحميل إعدادات الدفع عند الاستلام…",
+      "loadError": "تعذّر تحميل إعدادات الدفع عند الاستلام: {{message}}",
+      "enable": "تفعيل الدفع عند الاستلام",
+      "instructions": "التعليمات (اختياري)",
+      "instructionsPlaceholder": "التعليمات التي تظهر للعملاء عند اختيار الدفع عند الاستلام",
+      "cityRestriction": "تقييد المدن (اختياري)",
+      "cityRestrictionHelp": "اترك الكل بدون تحديد لإتاحة الدفع عند الاستلام لجميع المدن. عند تحديد مدينة أو أكثر، يُتاح الدفع عند الاستلام لتلك المدن فقط.",
+      "loadingCities": "جارٍ تحميل المدن…",
+      "citiesError": "تعذّر تحميل المدن: {{message}}",
+      "noCities": "لا توجد مدن شحن مُهيّأة بعد.",
+      "savedToast": "تم حفظ إعدادات الدفع عند الاستلام",
+      "saveErrorToast": "تعذّر حفظ إعدادات الدفع عند الاستلام"
+    },
+    "fx": {
+      "label": "العملات / أسعار الصرف",
+      "title": "العملات / أسعار الصرف",
+      "subtitle": "إدارة أسعار التحويل والعملات المتاحة للعملاء.",
+      "flagLoading": "أسعار الصرف: جارٍ التحميل…",
+      "flagEnabled": "أسعار الصرف مُفعّلة",
+      "flagDisabled": "أسعار الصرف معطّلة",
+      "ratesTitle": "أسعار التحويل",
+      "ratesSubtitle": "عدد وحدات العملة المقابلة لكل 1 {{base}}.",
+      "ratesLoadError": "تعذّر تحميل الأسعار: {{message}}",
+      "ratesLoading": "جارٍ تحميل الأسعار…",
+      "baseHint": "العملة الأساس — دائمًا 1.",
+      "rateInvalid": "أدخل رقمًا أكبر من 0.",
+      "rateSaveError": "تعذّر حفظ سعر {{code}}: {{message}}",
+      "configTitle": "إعدادات العملات",
+      "configSubtitle": "اختر العملات المتاحة وعملة العرض الافتراضية.",
+      "configLoadError": "تعذّر تحميل إعدادات العملات: {{message}}",
+      "configLoading": "جارٍ تحميل الإعدادات…",
+      "defaultCurrency": "العملة الافتراضية",
+      "selectDefaultCurrency": "اختر عملة افتراضية",
+      "enableAtLeastOne": "فعّل عملة واحدة على الأقل.",
+      "defaultMustBeEnabled": "يجب أن تكون العملة الافتراضية ضمن العملات المُفعّلة.",
+      "configSaveError": "تعذّر حفظ الإعدادات: {{message}}"
+    },
+    "shippingCities": {
+      "label": "مدن الشحن",
+      "title": "مدن الشحن",
+      "subtitle": "إدارة أسعار التوصيل لكل مدينة.",
+      "add": "إضافة مدينة",
+      "loading": "جارٍ تحميل مدن الشحن…",
+      "loadError": "تعذّر تحميل مدن الشحن: {{message}}",
+      "empty": "لا توجد مدن شحن بعد. أضف مدينة للبدء.",
+      "colCity": "المدينة",
+      "colDeliveryPrice": "سعر التوصيل",
+      "addTitle": "إضافة مدينة شحن",
+      "editTitle": "تعديل مدينة الشحن",
+      "cityName": "اسم المدينة",
+      "cityNamePlaceholder": "مثال: صنعاء",
+      "deliveryPrice": "سعر التوصيل",
+      "deliveryPricePlaceholder": "0.00",
+      "activeLabel": "مُفعّلة",
+      "createdToast": "تم إنشاء مدينة الشحن",
+      "updatedToast": "تم تحديث مدينة الشحن",
+      "deletedToast": "تم حذف مدينة الشحن",
+      "saveErrorToast": "تعذّر حفظ مدينة الشحن",
+      "toggleErrorToast": "تعذّر تغيير حالة مدينة الشحن",
+      "deleteErrorToast": "تعذّر حذف مدينة الشحن",
+      "deleteTitle": "حذف مدينة الشحن",
+      "deleteConfirm": "هل أنت متأكد من حذف \"{{name}}\"؟ لا يمكن التراجع عن هذا الإجراء."
+    },
+    "settlement": {
+      "title": "التسوية",
+      "loading": "جارٍ تحميل التسوية…",
+      "loadError": "تعذّر تحميل بيانات التسوية",
+      "empty": "لم يتم حساب أي تسوية لهذا الطلب بعد.",
+      "settlementCurrency": "عملة التسوية",
+      "settlementTotal": "إجمالي التسوية",
+      "subtotal": "المجموع الفرعي",
+      "shipping": "الشحن",
+      "tax": "الضريبة",
+      "discount": "الخصم",
+      "rate": "السعر (لكل 1 {{base}})",
+      "editorTitle": "تغيير عملة التسوية",
+      "reason": "السبب",
+      "reasonPlaceholder": "ما سبب تغيير عملة التسوية؟",
+      "rateLoading": "جارٍ تحميل سعر الصرف…",
+      "rateApplied": "السعر المُطبّق: {{rate}} لكل 1 SAR",
+      "rateUnavailable": "لا يوجد سعر صرف متاح لهذه العملة",
+      "updateError": "تعذّر تحديث عملة التسوية",
+      "noRateConfigured": "لا يوجد سعر صرف مُهيّأ للعملة {{currency}}. قم بتهيئته من صفحة إعدادات العملات / أسعار الصرف أولاً.",
+      "defaultReason": "تغيير عملة التسوية من قبل المشرف",
+      "updatedTo": "تم تحديث عملة التسوية إلى {{currency}}."
+    },
+    "reports": {
+      "common": {
+        "exportPdf": "تصدير PDF",
+        "search": "بحث",
+        "reset": "إعادة تعيين",
+        "all": "الكل",
+        "noData": "لا توجد بيانات مطابقة.",
+        "loadError": "تعذّر تحميل التقرير: {{message}}",
+        "noPermission": "لا تملك صلاحية عرض هذا التقرير.",
+        "dateFrom": "من تاريخ",
+        "dateTo": "إلى تاريخ",
+        "currency": "العملة",
+        "orders": "عدد الطلبات",
+        "province": "المحافظة",
+        "city": "المدينة",
+        "status": "الحالة",
+        "date": "التاريخ",
+        "orderNo": "رقم الطلب",
+        "sku": "SKU",
+        "warehouse": "المستودع",
+        "item": "الصنف",
+        "value": "القيمة",
+        "available": "المتاح"
+      },
+      "index": {
+        "title": "التقارير",
+        "subtitle": "اختر تقريرًا لعرضه وتصفيته وتصديره PDF",
+        "noPermission": "لا تملك صلاحية عرض أي تقرير.",
+        "links": {
+          "soldProducts": {
+            "title": "المنتجات المباعة",
+            "description": "الأصناف المباعة بالكمية والقيمة (حسب الصنف/العملة/المنطقة/المدينة/التصنيف)"
+          },
+          "salesByCustomer": {
+            "title": "المبيعات حسب العميل",
+            "description": "إجمالي مشتريات كل عميل وعدد طلباته"
+          },
+          "revenueByCurrency": {
+            "title": "الإيرادات حسب العملة",
+            "description": "الإيرادات والإجماليات مقسّمة حسب العملة"
+          },
+          "settlements": {
+            "title": "التسويات",
+            "description": "تسويات العملات لكل طلب والأسعار المطبّقة"
+          },
+          "paymentMethods": {
+            "title": "توزيع طرق الدفع",
+            "description": "الطلبات والمبالغ حسب طريقة الدفع"
+          },
+          "bankTransfers": {
+            "title": "التحويلات البنكية",
+            "description": "إيرادات التحويل البنكي حسب العملة والحساب"
+          },
+          "discounts": {
+            "title": "الخصومات",
+            "description": "الطلبات التي طُبّق عليها خصم وإجماليات الخصم"
+          },
+          "coupons": {
+            "title": "القسائم",
+            "description": "قائمة القسائم/العروض ومعدّل استخدامها"
+          },
+          "tax": {
+            "title": "الضرائب",
+            "description": "الضريبة المحصّلة حسب العملة"
+          },
+          "shipping": {
+            "title": "الشحن",
+            "description": "إيرادات الشحن حسب المدينة"
+          },
+          "returns": {
+            "title": "المرتجعات",
+            "description": "المرتجعات وحالاتها والكميات المرتجعة"
+          },
+          "inventoryStock": {
+            "title": "المخزون حسب المستودع",
+            "description": "الكميات المتاحة والمحجوزة لكل صنف ومستودع"
+          },
+          "lowStock": {
+            "title": "الأصناف منخفضة المخزون",
+            "description": "الأصناف عند أو تحت حدّ إعادة الطلب"
+          },
+          "dailyActivity": {
+            "title": "النشاط اليومي",
+            "description": "عدد الطلبات والإيراد لكل يوم"
+          },
+          "abandonedCarts": {
+            "title": "السلال المهجورة",
+            "description": "السلال المهجورة وتذكيرات الاسترجاع ومعدّل التحوّل إلى طلبات"
+          }
+        }
+      },
+      "soldProducts": {
+        "title": "المنتجات المباعة",
+        "description": "الأصناف المباعة بالكمية والقيمة، حسب البُعد المختار",
+        "groupBy": "التجميع حسب",
+        "groupProduct": "الصنف",
+        "groupCategory": "التصنيف",
+        "groupCurrency": "العملة",
+        "groupRegion": "المنطقة",
+        "groupCity": "المدينة",
+        "groupProvince": "المحافظة",
+        "category": "التصنيف",
+        "colItem": "البند",
+        "colQuantity": "الكمية",
+        "summary": "إجمالي الكمية: {{quantity}} — إجمالي القيمة: {{value}}"
+      },
+      "tax": {
+        "title": "تقرير الضرائب",
+        "description": "الضريبة المحصّلة والإجمالي الخاضع للضريبة حسب العملة",
+        "colTaxable": "الخاضع للضريبة",
+        "colTaxTotal": "إجمالي الضريبة"
+      },
+      "shipping": {
+        "title": "تقرير الشحن",
+        "description": "إيرادات الشحن المحصّلة حسب المدينة",
+        "colValue": "إيراد الشحن"
+      },
+      "coupons": {
+        "title": "تقرير القسائم",
+        "description": "القسائم/العروض الترويجية وإعداداتها ومعدّل استخدامها",
+        "statusActive": "نشط",
+        "statusInactive": "غير نشط",
+        "statusDraft": "مسودة",
+        "code": "الرمز",
+        "codePlaceholder": "رمز القسيمة",
+        "colType": "النوع",
+        "colRedemptions": "مرات الاستخدام",
+        "typePercentage": "نسبة",
+        "typeFixed": "مبلغ ثابت"
+      },
+      "salesByCustomer": {
+        "title": "المبيعات حسب العميل",
+        "description": "إجمالي مشتريات كل عميل وعدد طلباته وآخر طلب",
+        "customer": "العميل",
+        "customerPlaceholder": "اسم أو بريد العميل",
+        "colEmail": "البريد",
+        "colValue": "إجمالي المشتريات",
+        "colLastOrder": "آخر طلب"
+      },
+      "settlements": {
+        "title": "تقرير التسويات",
+        "description": "تسوية كل طلب من العملة الأساسية إلى عملة التسوية والسعر المطبّق",
+        "settlementCurrency": "عملة التسوية",
+        "colBaseCurrency": "العملة الأساسية",
+        "colRate": "السعر المطبّق",
+        "colTotal": "إجمالي التسوية",
+        "summary": "إجمالي التسويات: {{value}}"
+      },
+      "revenueByCurrency": {
+        "title": "الإيرادات حسب العملة",
+        "description": "الإجماليات (الفرعي، الشحن، الضريبة، الخصم، الكلي) لكل عملة",
+        "colSubtotal": "الإجمالي الفرعي",
+        "colShipping": "الشحن",
+        "colTax": "الضريبة",
+        "colDiscount": "الخصم",
+        "colTotal": "الإجمالي"
+      },
+      "paymentMethods": {
+        "title": "توزيع طرق الدفع",
+        "description": "عدد الطلبات والمبالغ ونسبة كل طريقة دفع",
+        "colMethod": "طريقة الدفع",
+        "colShare": "النسبة %"
+      },
+      "returns": {
+        "title": "تقرير المرتجعات",
+        "description": "المرتجعات وحالاتها والكميات المرتجعة",
+        "statusRequested": "مطلوب",
+        "statusReceived": "مستلم",
+        "statusPartiallyReceived": "مستلم جزئياً",
+        "statusCanceled": "ملغي",
+        "colItemsCount": "عدد الأصناف المرتجعة"
+      },
+      "bankTransfers": {
+        "title": "التحويلات البنكية",
+        "description": "إيرادات التحويل البنكي حسب العملة والحسابات البنكية المرتبطة",
+        "colValue": "إجمالي التحويلات",
+        "colAccounts": "الحسابات البنكية"
+      },
+      "discounts": {
+        "title": "تقرير الخصومات",
+        "description": "الطلبات التي طُبّق عليها خصم وقيمة الخصم",
+        "colDiscountTotal": "قيمة الخصم",
+        "colOrderTotal": "إجمالي الطلب",
+        "summary": "إجمالي الخصومات: {{value}}"
+      },
+      "dailyActivity": {
+        "title": "تقرير النشاط اليومي",
+        "description": "عدد الطلبات والملغاة والإيراد لكل يوم",
+        "colDay": "اليوم",
+        "colCanceled": "الملغاة",
+        "colValue": "الإيراد"
+      },
+      "inventoryStock": {
+        "title": "المخزون حسب المستودع",
+        "description": "الكميات المخزّنة والمحجوزة والمتاحة لكل صنف ومستودع",
+        "searchLabel": "بحث",
+        "searchPlaceholder": "SKU أو اسم الصنف",
+        "colStocked": "المخزّن",
+        "colReserved": "المحجوز",
+        "summary": "الإجمالي — المخزّن: {{stocked}} / المحجوز: {{reserved}} / المتاح: {{available}}"
+      },
+      "lowStock": {
+        "title": "الأصناف منخفضة المخزون",
+        "description": "الأصناف عند أو تحت حدّ إعادة الطلب",
+        "threshold": "الحدّ"
+      },
+      "abandonedCarts": {
+        "title": "تقرير السلال المهجورة",
+        "description": "السلال التي أُرسلت لها تذكيرات الاسترجاع ومعدّل تحوّلها إلى طلبات",
+        "colEmail": "البريد الإلكتروني",
+        "colReminderCount": "عدد التذكيرات",
+        "colLastReminder": "آخر تذكير",
+        "colRecovered": "تم الاسترجاع",
+        "colCreatedAt": "تاريخ الإنشاء",
+        "yes": "نعم",
+        "no": "لا",
+        "summaryReminded": "السلال المذكّرة: {{value}}",
+        "summaryRemindersSent": "إجمالي التذكيرات المُرسلة: {{value}}",
+        "summaryRecovered": "السلال المُسترجعة: {{value}}",
+        "summaryRate": "معدّل الاسترجاع: {{rate}}%"
+      }
+    }
+  },
+  "draftOrders": {
+    "domain": "الطلبات المسودّة",
+    "deleteWarning": "أنت على وشك حذف الطلب المسودّة {{id}}. لا يمكن التراجع عن هذا الإجراء.",
+    "paymentLinkLabel": "رابط الدفع",
+    "cartIdLabel": "معرّف السلة",
+    "markAsPaid": {
+      "label": "وضع علامة مدفوع",
+      "warningTitle": "وضع علامة مدفوع",
+      "warningDescription": "أنت على وشك وضع علامة على الطلب المسودّة كمدفوع. لا يمكن التراجع عن هذا الإجراء، ولن يكون جمع الدفع ممكنًا لاحقًا."
+    },
+    "status": {
+      "open": "مفتوح",
+      "completed": "مكتمل"
+    },
+    "create": {
+      "createDraftOrder": "إنشاء طلب مسودّة",
+      "createDraftOrderHint": "أنشئ طلبًا مسودّة جديدًا لإدارة تفاصيل الطلب قبل تقديمه.",
+      "chooseRegionHint": "اختر المنطقة",
+      "existingItemsLabel": "العناصر الموجودة",
+      "existingItemsHint": "إضافة المنتجات الموجودة إلى الطلب المسودّة.",
+      "customItemsLabel": "العناصر المخصّصة",
+      "customItemsHint": "إضافة عناصر مخصّصة إلى الطلب المسودّة.",
+      "addExistingItemsAction": "إضافة العناصر الموجودة",
+      "addCustomItemAction": "إضافة عنصر مخصّص",
+      "noCustomItemsAddedLabel": "لم تتم إضافة عناصر مخصّصة بعد",
+      "noExistingItemsAddedLabel": "لم تتم إضافة عناصر موجودة بعد",
+      "chooseRegionTooltip": "اختر منطقة أولاً",
+      "useExistingCustomerLabel": "استخدام عميل موجود",
+      "addShippingMethodsAction": "إضافة طرق الشحن",
+      "unitPriceOverrideLabel": "تجاوز سعر الوحدة",
+      "shippingOptionLabel": "خيار الشحن",
+      "shippingOptionHint": "اختر خيار الشحن للطلب المسودّة.",
+      "shippingPriceOverrideLabel": "تجاوز سعر الشحن",
+      "shippingPriceOverrideHint": "تجاوز سعر الشحن للطلب المسودّة.",
+      "sendNotificationLabel": "إرسال إشعار",
+      "sendNotificationHint": "إرسال إشعار إلى العميل عند إنشاء الطلب المسودّة."
+    },
+    "list": {
+      "noRecordsMessage": "لا توجد طلبات مسودّة",
+      "description": "أنشئ طلبًا مسودّة جديدًا للبدء.",
+      "filtered": {
+        "heading": "لا توجد نتائج",
+        "description": "لا توجد طلبات مسودّة تطابق معايير التصفية."
+      }
+    },
+    "validation": {
+      "requiredEmailOrCustomer": "البريد الإلكتروني أو العميل مطلوب.",
+      "requiredItems": "مطلوب عنصر واحد على الأقل.",
+      "invalidEmail": "يجب أن يكون البريد الإلكتروني عنوان بريد إلكتروني صالحًا."
+    }
+  },
+  "general": {
+    "fullList": "الكل",
+    "original": "الأصلي",
+    "selectAll": "تحديد الكل",
+    "unselectAll": "إلغاء تحديد الكل",
+    "remaining": "المتبقّي",
+    "areYouSureDescription": "أنت على وشك حذف {{entity}} {{title}}. لا يمكن التراجع عن هذا الإجراء.",
+    "noRecordsMessageFiltered": "لا توجد سجلات مطابقة للفلاتر."
+  },
+  "actions": {
+    "saveChanges": "حفظ التغييرات",
+    "saveAndClose": "حفظ وإغلاق",
+    "editVariantImages": "تعديل صور المتغيّر",
+    "editImages": "تعديل الصور"
+  },
+  "filters": {
+    "collapse": {
+      "all": "طيّ الكل"
+    }
+  },
+  "addresses": {
+    "title": "العناوين"
+  },
+  "labels": {
+    "selectValue": "اختر قيمة",
+    "selectValues": "اختر قيمًا"
+  },
+  "fields": {
+    "reference": "المرجع",
+    "reference_id": "معرّف المرجع",
+    "enabledInStore": "مُفعّل في المتجر",
+    "isReturn": "مرتجع",
+    "promotionCode": "رمز العرض الترويجي",
+    "serviceZone": "منطقة الخدمة",
+    "creditTotal": "إجمالي الأرصدة",
+    "resource": "المورد",
+    "operation": "العملية"
+  },
+  "customers": {
+    "addresses": {
+      "title": "العناوين",
+      "fields": {
+        "addressName": "اسم العنوان",
+        "address1": "العنوان 1",
+        "address2": "العنوان 2",
+        "city": "المدينة",
+        "province": "المحافظة",
+        "postalCode": "الرمز البريدي",
+        "country": "الدولة",
+        "phone": "الهاتف",
+        "company": "الشركة",
+        "countryCode": "رمز الدولة",
+        "provinceCode": "رمز المحافظة"
+      },
+      "create": {
+        "header": "إنشاء عنوان",
+        "hint": "إنشاء عنوان جديد للعميل.",
+        "successToast": "تم إنشاء العنوان بنجاح."
+      }
+    }
+  },
+  "orders": {
+    "giftCardsStoreCreditLines": "بطاقات الهدايا وأرصدة المتجر",
+    "creditLines": {
+      "title": "أرصدة المتجر",
+      "total": "مجموع كل الأرصدة",
+      "creditOrDebit": "إضافة / خصم",
+      "createCreditLine": "إنشاء رصيد",
+      "createCreditLineSuccess": "تم إنشاء الرصيد بنجاح",
+      "createCreditLineError": "حدث خطأ أثناء إنشاء الرصيد",
+      "createCreditLineDescription": "إنشاء رصيد بمبلغ {{amount}}",
+      "operation": "العملية",
+      "credit": "إضافة",
+      "creditDescription": "يضيف مبلغًا موجبًا إلى الطلب",
+      "debit": "خصم",
+      "debitDescription": "يخصم مبلغًا من الطلب"
+    },
+    "balanceSettlement": {
+      "title": "تسوية الرصيد",
+      "settlementType": "نوع التسوية",
+      "settlementTypes": {
+        "paymentMethod": "طريقة الدفع",
+        "paymentMethodDescription": "استرداد المبلغ إلى طريقة الدفع",
+        "creditLine": "رصيد المتجر",
+        "creditLineDescription": "استرداد المبلغ كرصيد في المتجر"
+      }
+    },
+    "export": {
+      "header": "تصدير قائمة الطلبات",
+      "description": "تصدير قائمة الطلبات إلى ملف CSV.",
+      "success": {
+        "title": "بدأ التصدير",
+        "description": "سيتم إشعارك عند جاهزية التصدير."
+      },
+      "filters": {
+        "title": "الفلاتر",
+        "description": "ستُطبَّق الفلاتر التالية على التصدير."
+      }
+    },
+    "summary": {
+      "totalAfterDiscount": "الإجمالي بعد الخصم"
+    },
+    "payment": {
+      "totalStoreCreditRefunds": "إجمالي المبالغ المستردّة كرصيد متجر"
+    },
+    "returns": {
+      "estDifference": "الفرق التقديري"
+    },
+    "claims": {
+      "carryOverPromotion": "ترحيل العروض الترويجية",
+      "carryOverPromotionHint": "تطبيق عروض الطلب على عناصر المطالبة",
+      "carryOverPromotionTooltip": "يمكن فقط ترحيل العروض من النوع الثابت بتخصيص EACH والعروض من النوع النسبي بتخصيص EACH أو ACROSS إلى عناصر المطالبة الصادرة."
+    },
+    "exchanges": {
+      "carryOverPromotion": "ترحيل العروض الترويجية",
+      "carryOverPromotionHint": "تطبيق عروض الطلب على عناصر الاستبدال",
+      "carryOverPromotionTooltip": "يمكن فقط ترحيل العروض من النوع الثابت بتخصيص EACH والعروض من النوع النسبي بتخصيص EACH أو ACROSS إلى عناصر الاستبدال الصادرة."
+    },
+    "allocateItems": {
+      "toast": {
+        "error": "تعذّر تخصيص العناصر التالية: {{items}}"
+      }
+    },
+    "shipment": {
+      "trackingUrl": "رابط التتبّع",
+      "labelUrl": "رابط بوليصة الشحن"
+    },
+    "fulfillment": {
+      "markAsPickedUp": "وضع علامة تم الاستلام",
+      "error": {
+        "wrongQuantity_one": "عنصر واحد فقط متاح للتجهيز"
+      },
+      "status": {
+        "awaitingPickup": "بانتظار الاستلام",
+        "awaitingShipping": "بانتظار الشحن",
+        "awaitingDelivery": "بانتظار التوصيل"
+      },
+      "toast": {
+        "fulfillmentPickedUp": "تم وضع علامة الاستلام على التجهيز بنجاح"
+      }
+    }
+  },
+  "auth": {
+    "login": {
+      "authenticationFailed": "فشل المصادقة",
+      "cloud": "تسجيل الدخول عبر Medusa Cloud"
+    }
+  },
+  "campaigns": {
+    "budget": {
+      "attribute": {
+        "customer_email": "البريد الإلكتروني",
+        "customer_id": "العميل"
+      },
+      "fields": {
+        "budgetAttribute": "تحديد الاستخدام لكل",
+        "budgetAttributeTooltip": "حدّد عدد المرات التي يمكن فيها استخدام العرض الترويجي من قِبل كل عميل أو بريد إلكتروني.",
+        "totalUsedByAttribute": "حدّ الميزانية لكل: {{attribute}}",
+        "totalUsedByAttributeCustomerId": "حدّ الميزانية لكل عميل",
+        "totalUsedByAttributeEmail": "حدّ الميزانية لكل بريد إلكتروني"
+      },
+      "type": {
+        "useByAttribute": {
+          "description": "ضع حدًّا لعدد مرات استخدام العرض الترويجي حسب قيمة سمة معيّنة.",
+          "title": "الاستخدام حسب السمة (معرّف العميل، البريد الإلكتروني، إلخ.)",
+          "titleCustomerId": "الاستخدام لكل عميل",
+          "titleEmail": "الاستخدام لكل بريد إلكتروني"
+        }
+      }
+    },
+    "fields": {
+      "totalUsedByAttribute": "إجمالي الاستخدام"
+    }
+  },
+  "inventory": {
+    "levelDeleted": "تم حذف مستوى المخزون بنجاح.",
+    "manageLocationQuantity": "إدارة كمية الموقع",
+    "quantityAcrossLocations": "{{quantity}} عبر {{locations}} مواقع"
+  },
+  "login": {
+    "mfa": {
+      "backToLogin": "العودة إلى تسجيل الدخول",
+      "completeError": "تعذّر إتمام المصادقة.",
+      "description": "أدخل الرمز المكوّن من 6 أرقام من تطبيق المصادقة.",
+      "recoveryCodePlaceholder": "رمز الاسترداد",
+      "recoveryDescription": "أدخل أحد رموز الاسترداد الخاصة بك.",
+      "title": "المصادقة الثنائية",
+      "useAuthenticator": "استخدام رمز تطبيق المصادقة",
+      "useAuthenticatorPrompt": "هل لديك وصول إلى تطبيق المصادقة؟",
+      "useRecoveryCode": "استخدام رمز استرداد",
+      "useRecoveryCodePrompt": "فقدت الوصول إلى تطبيق المصادقة؟",
+      "verify": "تحقّق",
+      "verifyError": "تعذّر تأكيد رمز التحقق."
+    }
+  },
+  "permissions": {
+    "accessDenied": {
+      "action": "ليس لديك صلاحية لتنفيذ هذا الإجراء.",
+      "description": "ليس لديك صلاحية للوصول إلى هذه الصفحة.",
+      "requiredPermission": "الصلاحية المطلوبة: {{permission}}",
+      "title": "تم رفض الوصول"
+    },
+    "actions": {
+      "create": "إنشاء",
+      "delete": "حذف",
+      "read": "عرض",
+      "update": "تعديل"
+    },
+    "requiredPermissions": {
+      "allOf": "كل من",
+      "anyOf": "أيّ من",
+      "none": "لا توجد صلاحيات معلَنة في هذا العرض.",
+      "source": "المصدر: {{source}}",
+      "title": "الصلاحيات المطلوبة"
+    },
+    "resources": {
+      "api_key": "مفتاح API",
+      "campaign": "حملة",
+      "customer": "عميل",
+      "customer_group": "مجموعة عملاء",
+      "inventory": "المخزون",
+      "order": "طلب",
+      "permission": "صلاحية",
+      "price_list": "قائمة أسعار",
+      "product": "منتج",
+      "product_category": "تصنيف منتجات",
+      "product_collection": "مجموعة منتجات",
+      "product_tag": "وسم منتج",
+      "product_type": "نوع منتج",
+      "promotion": "عرض ترويجي",
+      "refund_reason": "سبب استرداد",
+      "region": "منطقة",
+      "reservation": "حجز",
+      "return_reason": "سبب إرجاع",
+      "role": "دور",
+      "sales_channel": "قناة بيع",
+      "shipping_option": "خيار شحن",
+      "shipping_profile": "ملف شحن",
+      "stock_location": "موقع مخزون",
+      "store": "متجر",
+      "tax_region": "منطقة ضريبية",
+      "translation": "ترجمة",
+      "user": "مستخدم",
+      "workflow": "سير عمل"
+    }
+  },
+  "policies": {
+    "create": {
+      "header": "إنشاء سياسة",
+      "hint": "عرّف صلاحية جديدة يمكن ربطها بالأدوار.",
+      "successToast": "تم إنشاء السياسة {{key}}"
+    },
+    "delete": {
+      "description": "أنت على وشك حذف السياسة {{key}}. لا يمكن التراجع عن هذا الإجراء.",
+      "successToast": "تم حذف السياسة {{key}}",
+      "title": "حذف السياسة"
+    },
+    "domain": "السياسات",
+    "edit": {
+      "header": "تعديل السياسة",
+      "successToast": "تم تحديث السياسة {{key}}"
+    },
+    "fields": {
+      "roles": "الأدوار",
+      "users": "المستخدمون"
+    },
+    "list": {
+      "empty": {
+        "description": "أنشئ سياسات لإدارة الصلاحيات التي يمكن للأدوار منحها.",
+        "heading": "لا توجد سياسات"
+      },
+      "filtered": {
+        "description": "لا توجد سياسات تطابق معايير التصفية الحالية.",
+        "heading": "لا توجد نتائج"
+      }
+    },
+    "roles": {
+      "empty": {
+        "description": "لا توجد أدوار تتضمّن هذه السياسة بعد.",
+        "heading": "لا توجد أدوار"
+      },
+      "list": {
+        "noRecordsMessage": "لا توجد أدوار تتضمّن هذه السياسة بعد."
+      }
+    },
+    "subtitle": "عرّف الصلاحيات التي يمكن للأدوار منحها."
+  },
+  "products": {
+    "columns": {
+      "collection": "المجموعة",
+      "created_at": "تاريخ الإنشاء",
+      "handle": "المعرّف",
+      "product_display": "المنتج",
+      "sales_channels_display": "قنوات البيع",
+      "status": "الحالة",
+      "thumbnail": "الصورة المصغّرة",
+      "title": "العنوان",
+      "updated_at": "تاريخ التحديث",
+      "variants_count": "المتغيّرات"
+    },
+    "media": {
+      "availableImages": "اختر الصور",
+      "fileTooLarge": "ملف واحد أو أكثر يتجاوز الحد الأقصى لحجم الملف {{size}}: {{name}}",
+      "manageImageVariants": "إدارة المتغيّرات المرتبطة",
+      "removeSelected": "إزالة المحدد",
+      "selectToAdd": "أضف صور المنتج إلى المتغيّر. لإضافة صور جديدة، أضِفها إلى المنتج أولاً.",
+      "showAvailableImages": "عرض الصور المتاحة",
+      "variantImages": "صور المتغيّر"
+    },
+    "variantMedia": {
+      "addToMultipleVariants": "الإضافة إلى عدة متغيّرات",
+      "emptyState": {
+        "action": "إضافة وسائط",
+        "description": "أضف وسائط إلى المتغيّر لعرضها في متجرك.",
+        "header": "لا توجد وسائط بعد"
+      },
+      "label": "وسائط المتغيّر",
+      "manageVariants": "إدارة المتغيّرات",
+      "manageVariantsDescription": "إدارة المتغيّرات المرتبطة بالصورة",
+      "successToast": "تم تحديث متغيّرات الصورة بنجاح."
+    }
+  },
+  "profile": {
+    "mfa": {
+      "authenticatorApp": "تطبيق المصادقة",
+      "description": "طلب تطبيق مصادقة عند تسجيل الدخول.",
+      "disableChallengeDescription": "أدخل الرمز المكوّن من 6 أرقام من تطبيق المصادقة لتعطيل المصادقة الثنائية.",
+      "disabled": "معطّل",
+      "disableDescription": "أنت على وشك تعطيل المصادقة الثنائية لحسابك.",
+      "disableError": "تعذّر تعطيل المصادقة الثنائية.",
+      "disableSuccess": "تم تعطيل المصادقة الثنائية",
+      "disableTitle": "تعطيل المصادقة الثنائية",
+      "enabled": "مُفعّل",
+      "method": "الطريقة",
+      "noMethod": "لا توجد طريقة مصادقة مُفعّلة",
+      "pending": "بانتظار الإعداد",
+      "qrError": "تعذّر إنشاء رمز QR.",
+      "recoveryCodesDescription": "انسخ رموز الاسترداد هذه واحتفظ بها في حال فقدت الوصول إلى تطبيق المصادقة.",
+      "recoveryCodesError": "تعذّر إنشاء رموز الاسترداد.",
+      "recoveryCodesTitle": "رموز الاسترداد",
+      "setupAuthenticatorApp": "إعداد تطبيق المصادقة",
+      "setupDescription": "امسح رمز QR بتطبيق المصادقة، ثم أدخل الرمز المكوّن من 6 أرقام لإنهاء الإعداد.",
+      "setupError": "تعذّر إعداد تطبيق المصادقة.",
+      "setupTitle": "إعداد تطبيق المصادقة",
+      "status": "الحالة",
+      "title": "المصادقة الثنائية",
+      "verifyError": "تعذّر تأكيد رمز التحقق."
+    }
+  },
+  "promotions": {
+    "fields": {
+      "allocationTooltip": "خيار «لكل عنصر» يفرض حدّ الكمية لكل عنصر، بينما «مرة واحدة» يفرض حدّ الكمية على السلة بأكملها",
+      "conditions": {
+        "target-rules": {
+          "items": {
+            "description": "سيُطبَّق العرض الترويجي على العناصر التي تطابق الشروط التالية.",
+            "title": "ما العناصر التي سيُطبَّق عليها العرض الترويجي؟"
+          },
+          "order": {
+            "description": "سيُطبَّق العرض الترويجي على العناصر التي تطابق الشروط التالية.",
+            "title": "ما العناصر التي سيُطبَّق عليها العرض الترويجي؟"
+          },
+          "shipping_methods": {
+            "description": "سيُطبَّق العرض الترويجي على طرق الشحن التي تطابق الشروط التالية.",
+            "title": "ما طرق الشحن التي سيُطبَّق عليها العرض الترويجي؟"
+          }
+        }
+      },
+      "taxInclusive": "شامل الضريبة",
+      "usage": "الاستخدام",
+      "usageLimit": "حدّ الاستخدام"
+    },
+    "form": {
+      "allocation": {
+        "once": {
+          "description": "يطبّق القيمة على عدد محدود من العناصر",
+          "title": "مرة واحدة"
+        }
+      },
+      "limit": {
+        "description": "أقصى عدد من المرات التي يمكن فيها استخدام هذا العرض عبر جميع الطلبات. اتركه فارغًا للاستخدام غير المحدود.",
+        "title": "حدّ الاستخدام"
+      },
+      "taxInclusive": {
+        "description": "فعّل هذا الحقل لتطبيق العرض الترويجي بعد الضرائب",
+        "title": "هل يشمل العرض الترويجي الضرائب؟"
+      },
+      "value": {
+        "invalid": "قيمة عرض ترويجي غير صالحة"
+      }
+    },
+    "templates": {
+      "amount_off_order": {
+        "description": "يخصم من إجمالي مبلغ الطلب",
+        "title": "مبلغ خصم على الطلب"
+      },
+      "amount_off_products": {
+        "description": "خصم على منتجات محددة أو مجموعة من المنتجات",
+        "title": "مبلغ خصم على المنتجات"
+      },
+      "buy_get": {
+        "description": "اشترِ X من المنتجات واحصل على Y",
+        "title": "اشترِ X واحصل على Y"
+      },
+      "percentage_off_order": {
+        "description": "يخصم نسبة مئوية من إجمالي مبلغ الطلب",
+        "title": "نسبة خصم على الطلب"
+      },
+      "percentage_off_product": {
+        "description": "يخصم نسبة مئوية من منتجات محددة",
+        "title": "نسبة خصم على المنتج"
+      },
+      "shipping_discount": {
+        "description": "يطبّق خصمًا بنسبة 100% على رسوم الشحن",
+        "title": "شحن مجاني"
+      }
+    }
+  },
+  "refundReasons": {
+    "calloutHint": "إدارة أسباب تصنيف المبالغ المستردّة.",
+    "create": {
+      "header": "إضافة سبب استرداد",
+      "hint": "أنشئ سبب استرداد جديدًا لتصنيف المبالغ المستردّة.",
+      "subtitle": "حدّد أكثر أسباب الاسترداد شيوعًا.",
+      "successToast": "تم إنشاء سبب الاسترداد {{label}} بنجاح."
+    },
+    "delete": {
+      "confirmation": "أنت على وشك حذف سبب الاسترداد «{{label}}». لا يمكن التراجع عن هذا الإجراء.",
+      "successToast": "تم حذف سبب الاسترداد بنجاح."
+    },
+    "domain": "أسباب الاسترداد",
+    "edit": {
+      "header": "تعديل سبب الاسترداد",
+      "subtitle": "عدّل قيمة سبب الاسترداد.",
+      "successToast": "تم تحديث سبب الاسترداد {{label}} بنجاح."
+    },
+    "editReason": "تعديل سبب الاسترداد",
+    "fields": {
+      "code": {
+        "label": "الرمز",
+        "placeholder": "gesture_of_goodwill"
+      },
+      "description": {
+        "label": "الوصف",
+        "placeholder": "واجه العميل تجربة تسوّق سيئة"
+      },
+      "label": {
+        "label": "التسمية",
+        "placeholder": "بادرة حسن نية"
+      }
+    },
+    "subtitle": "إدارة أسباب إصدار المبالغ المستردّة."
+  },
+  "salesChannels": {
+    "list": {
+      "empty": {
+        "description": "بمجرد إنشاء قناة بيع، ستظهر هنا.",
+        "heading": "لا توجد قنوات بيع"
+      },
+      "filtered": {
+        "description": "لا توجد قنوات بيع تطابق معايير التصفية الحالية.",
+        "heading": "لا توجد نتائج"
+      }
+    }
+  },
+  "roles": {
+    "actions": {
+      "managePermissions": "إدارة الصلاحيات"
+    },
+    "create": {
+      "header": "إنشاء دور",
+      "hint": "أنشئ دورًا لإدارة الوصول في لوحة التحكم.",
+      "permissions": {
+        "empty": {
+          "description": "لا توجد صلاحيات للاختيار.",
+          "heading": "لا توجد صلاحيات"
+        },
+        "filtered": {
+          "description": "لا توجد صلاحيات تطابق معايير التصفية الحالية.",
+          "heading": "لا توجد نتائج"
+        }
+      },
+      "successToast": "تم إنشاء الدور {{name}}",
+      "tabs": {
+        "details": "التفاصيل",
+        "permissions": "الصلاحيات"
+      }
+    },
+    "delete": {
+      "description": "أنت على وشك حذف الدور {{name}}. لا يمكن التراجع عن هذا الإجراء.",
+      "successToast": "تم حذف الدور {{name}}",
+      "title": "حذف الدور"
+    },
+    "domain": "الأدوار",
+    "edit": {
+      "header": "تعديل الدور",
+      "successToast": "تم تحديث الدور {{name}}"
+    },
+    "fields": {
+      "permissions": "الصلاحيات"
+    },
+    "list": {
+      "empty": {
+        "description": "أنشئ أدوارًا لإدارة الوصول في لوحة التحكم.",
+        "heading": "لا توجد أدوار"
+      },
+      "filtered": {
+        "description": "لا توجد أدوار تطابق معايير التصفية الحالية.",
+        "heading": "لا توجد نتائج"
+      }
+    },
+    "permissions": {
+      "empty": {
+        "description": "لا توجد صلاحيات للاختيار.",
+        "heading": "لا توجد صلاحيات"
+      },
+      "filtered": {
+        "description": "لا توجد صلاحيات تطابق معايير التصفية الحالية.",
+        "heading": "لا توجد نتائج"
+      },
+      "header": "إدارة الصلاحيات",
+      "hint": "اختر الصلاحيات التي يجب أن يتضمّنها هذا الدور."
+    },
+    "subtitle": "إدارة أدوار الوصول والصلاحيات.",
+    "users": {
+      "add": {
+        "list": {
+          "noRecordsMessage": "أنشئ مستخدمًا أولاً."
+        },
+        "successToast_one": "تمت إضافة المستخدم إلى الدور بنجاح.",
+        "successToast_other": "تمت إضافة المستخدمين إلى الدور بنجاح."
+      },
+      "alreadyAddedTooltip": "المستخدم لديه هذا الدور بالفعل.",
+      "list": {
+        "noRecordsMessage": "لا يوجد مستخدمون لهذا الدور."
+      },
+      "remove": {
+        "description_one": "أنت على وشك إزالة {{count}} مستخدم من الدور. لا يمكن التراجع عن هذا الإجراء.",
+        "description_other": "أنت على وشك إزالة {{count}} مستخدمين من الدور. لا يمكن التراجع عن هذا الإجراء.",
+        "title_one": "إزالة المستخدم",
+        "title_other": "إزالة المستخدمين"
+      },
+      "unassignableRoleTooltip": "ليس لديك صلاحية إسناد هذا الدور — صلاحياتك لا تغطّي جميع سياساته."
+    }
+  },
+  "shippingOptionTypes": {
+    "create": {
+      "header": "إنشاء نوع خيار شحن",
+      "hint": "أنشئ نوع خيار شحن جديدًا لتصنيف خيارات الشحن.",
+      "successToast": "تم إنشاء نوع خيار الشحن {{label}} بنجاح."
+    },
+    "delete": {
+      "confirmation": "أنت على وشك حذف نوع خيار الشحن «{{label}}». لا يمكن التراجع عن هذا الإجراء.",
+      "successToast": "تم حذف نوع خيار الشحن «{{label}}» بنجاح."
+    },
+    "domain": "أنواع خيارات الشحن",
+    "edit": {
+      "header": "تعديل نوع خيار الشحن",
+      "successToast": "تم تحديث نوع خيار الشحن {{label}} بنجاح."
+    },
+    "fields": {
+      "code": "الرمز",
+      "description": "الوصف",
+      "label": "التسمية"
+    },
+    "subtitle": "نظّم خيارات الشحن في أنواع."
+  },
+  "stockLocations": {
+    "delete": {
+      "successToast": "تم حذف الموقع «{{name}}» بنجاح."
+    },
+    "list": {
+      "noRecordsMessage": "لا توجد سجلات",
+      "noRecordsMessageEmpty": "لا توجد مواقع",
+      "noRecordsMessageFiltered": "لا توجد مواقع مطابقة للفلاتر"
+    },
+    "pickupOptions": {
+      "edit": {
+        "header": "تعديل خيار الاستلام"
+      }
+    },
+    "salesChannels": {
+      "hint": "إدارة قنوات البيع المرتبطة بهذا الموقع."
+    },
+    "shippingOptions": {
+      "create": {
+        "pickup": {
+          "header": "إنشاء خيار استلام لـ {{zone}}",
+          "hint": "أنشئ خيار استلام جديدًا لتحديد كيفية استلام المنتجات من هذا الموقع.",
+          "label": "خيارات الاستلام",
+          "successToast": "تم إنشاء خيار الاستلام {{name}} بنجاح."
+        }
+      },
+      "fields": {
+        "count": {
+          "pickup_one": "{{count}} خيار استلام",
+          "pickup_other": "{{count}} خيارات استلام"
+        },
+        "type": "نوع خيار الشحن"
+      }
+    },
+    "sidebar": {
+      "shippingOptionTypes": {
+        "description": "تجميع خيارات الشحن حسب الأنواع",
+        "label": "أنواع خيارات الشحن"
+      }
+    }
+  },
+  "store": {
+    "defaultLocale": "اللغة الافتراضية",
+    "defaultLocation": "الموقع الافتراضي",
+    "defaultSalesChannel": "قناة البيع الافتراضية",
+    "localeAlreadyAdded": "تمت إضافة اللغة إلى متجرك بالفعل.",
+    "locales": "اللغات",
+    "removeLocaleWarning_one": "أنت على وشك إزالة {{count}} لغة من متجرك. ستُحذف أي ترجمة تستخدم هذه اللغة.",
+    "removeLocaleWarning_other": "أنت على وشك إزالة {{count}} لغات من متجرك. ستُحذف أي ترجمة تستخدم هذه اللغات.",
+    "toast": {
+      "localesRemoved": "تمت إزالة اللغات من المتجر بنجاح",
+      "localesUpdated": "تم تحديث اللغات بنجاح"
+    }
+  },
+  "taxRegions": {
+    "create": {
+      "errors": {
+        "missingCountry": "الدولة مطلوبة عند إنشاء منطقة ضريبية.",
+        "missingProvider": "المزوّد مطلوب عند إنشاء منطقة ضريبية."
+      }
+    },
+    "edit": {
+      "header": "تعديل المنطقة الضريبية",
+      "hint": "عدّل تفاصيل المنطقة الضريبية.",
+      "successToast": "تم تحديث المنطقة الضريبية بنجاح."
+    },
+    "fields": {
+      "targets": {
+        "options": {
+          "shippingOption": "خيارات الشحن"
+        },
+        "placeholders": {
+          "shippingOption": "ابحث عن خيارات الشحن"
+        },
+        "tags": {
+          "shippingOption": "خيار الشحن"
+        }
+      },
+      "taxProvider": "مزوّد الضريبة"
+    },
+    "provider": {
+      "header": "مزوّد الضريبة"
+    }
+  },
+  "translations": {
+    "actions": {
+      "manage": "إدارة الترجمات",
+      "manageEntities": "إدارة الكيانات",
+      "manageLocales": "إدارة اللغات"
+    },
+    "activeLocales": {
+      "heading": "اللغات",
+      "noLocalesTip": "قم بتهيئة لغة واحدة على الأقل لبدء ترجمة بياناتك",
+      "noLocalesTipConfigureAction": "تهيئة",
+      "subtitle": "الترجمات المُفعّلة"
+    },
+    "bulk": {
+      "header": "المحرّر الجماعي للترجمات",
+      "mainColumn": "اللغة"
+    },
+    "completion": {
+      "footer": "اللغات",
+      "heading": "الحقول المترجمة",
+      "toTranslate": "ناقص",
+      "translated": "مترجم"
+    },
+    "domain": "الترجمات",
+    "edit": {
+      "successToast": "تم تحديث الترجمات بنجاح",
+      "unsavedChanges": {
+        "description": "لا تفقد عملك. لديك تغييرات لم تُحفظ بعد",
+        "title": "ترجمات غير محفوظة"
+      }
+    },
+    "list": {
+      "metrics": "{{translated}} من {{total}} ترجمة"
+    },
+    "settings": {
+      "header": "إدارة الكيانات القابلة للترجمة",
+      "successToast": "تم تحديث الإعدادات بنجاح"
+    },
+    "subtitle": "إدارة ترجمات بياناتك في Medusa"
+  },
+  "users": {
+    "inviteRolesTooltip": "إذا لم يتم اختيار دور، فسيتم دعوة المستخدم بدور المستخدم الخارق (superuser)."
+  },
+  "views": {
+    "prompts": {
+      "updateDefault": {
+        "cancelText": "إلغاء",
+        "confirmText": "تحديث للجميع",
+        "description": "سيؤدي هذا إلى تحديث العرض الافتراضي لجميع المستخدمين. هل أنت متأكد؟",
+        "title": "تحديث العرض الافتراضي"
+      },
+      "updateView": {
+        "cancelText": "إلغاء",
+        "confirmText": "تحديث",
+        "description": "هل أنت متأكد أنك تريد تحديث «{{name}}»؟",
+        "title": "تحديث العرض"
+      }
+    },
+    "save": "حفظ",
+    "saveAsNew": "حفظ كعرض جديد",
+    "updateDefaultForEveryone": "تحديث الافتراضي للجميع",
+    "updateViewName": "تحديث اسم العرض"
+  }
+}

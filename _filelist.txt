@@ -1,0 +1,3 @@
+apps/storefront/src/modules/checkout/components/shipping/index.tsx
+apps/storefront/src/modules/checkout/components/payment/index.tsx
+apps/storefront/src/modules/checkout/templates/checkout-form/index.tsx

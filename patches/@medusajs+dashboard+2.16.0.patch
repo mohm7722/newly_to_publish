@@ -1,0 +1,222 @@
+diff --git a/node_modules/@medusajs/dashboard/dist/chunk-F2JMB3WR.mjs b/node_modules/@medusajs/dashboard/dist/chunk-F2JMB3WR.mjs
+index d49c270..055acb3 100644
+--- a/node_modules/@medusajs/dashboard/dist/chunk-F2JMB3WR.mjs
++++ b/node_modules/@medusajs/dashboard/dist/chunk-F2JMB3WR.mjs
+@@ -101508,15 +101508,15 @@ var useShortcuts = ({
+ };
+ var useGlobalShortcuts = () => {
+   const { t: t2 } = useTranslation2();
+-  const navigate = useNavigate();
+   const { mutateAsync } = useLogout();
+   const handleLogout = async () => {
+-    await mutateAsync(void 0, {
+-      onSuccess: () => {
+-        queryClient.clear();
+-        navigate("/login");
+-      }
+-    });
++    await queryClient.cancelQueries();
++    try {
++      await mutateAsync();
++    } finally {
++      queryClient.clear();
++      window.location.replace("/app/login");
++    }
+   };
+   const globalShortcuts = [
+     // Pages
+@@ -103759,15 +103759,15 @@ var ThemeToggle = () => {
+ };
+ var Logout = () => {
+   const { t: t2 } = useTranslation9();
+-  const navigate = useNavigate3();
+   const { mutateAsync: logoutMutation } = useLogout();
+   const handleLogout = async () => {
+-    await logoutMutation(void 0, {
+-      onSuccess: () => {
+-        queryClient.clear();
+-        navigate("/login");
+-      }
+-    });
++    await queryClient.cancelQueries();
++    try {
++      await logoutMutation();
++    } finally {
++      queryClient.clear();
++      window.location.replace("/app/login");
++    }
+   };
+   return /* @__PURE__ */ jsx13(DropdownMenu2.Item, { onClick: handleLogout, children: /* @__PURE__ */ jsxs8("div", { className: "flex items-center gap-x-2", children: [
+     /* @__PURE__ */ jsx13(OpenRectArrowOut, { className: "text-ui-fg-subtle" }),
+@@ -103895,15 +103895,15 @@ var MainSidebar = () => {
+ };
+ var Logout2 = () => {
+   const { t: t2 } = useTranslation10();
+-  const navigate = useNavigate4();
+   const { mutateAsync: logoutMutation } = useLogout();
+   const handleLogout = async () => {
+-    await logoutMutation(void 0, {
+-      onSuccess: () => {
+-        queryClient.clear();
+-        navigate("/login");
+-      }
+-    });
++    await queryClient.cancelQueries();
++    try {
++      await logoutMutation();
++    } finally {
++      queryClient.clear();
++      window.location.replace("/app/login");
++    }
+   };
+   return /* @__PURE__ */ jsx14(DropdownMenu3.Item, { onClick: handleLogout, children: /* @__PURE__ */ jsxs9("div", { className: "flex items-center gap-x-2", children: [
+     /* @__PURE__ */ jsx14(OpenRectArrowOut2, { className: "text-ui-fg-subtle" }),
+diff --git a/node_modules/@medusajs/dashboard/src/components/layout/main-layout/main-layout.tsx b/node_modules/@medusajs/dashboard/src/components/layout/main-layout/main-layout.tsx
+index ad49a1f..44d283b 100644
+--- a/node_modules/@medusajs/dashboard/src/components/layout/main-layout/main-layout.tsx
++++ b/node_modules/@medusajs/dashboard/src/components/layout/main-layout/main-layout.tsx
+@@ -24,7 +24,7 @@ import { Skeleton } from "../../common/skeleton"
+ import { INavItem, NavItem } from "../../layout/nav-item"
+ import { Shell } from "../../layout/shell"
+ 
+-import { Link, useLocation, useNavigate } from "react-router-dom"
++import { Link, useLocation } from "react-router-dom"
+ import { useLogout } from "../../../hooks/api"
+ import { queryClient } from "../../../lib/query-client"
+ import { useExtension } from "../../../providers/extension-provider"
+@@ -69,20 +69,16 @@ const MainSidebar = () => {
+ 
+ const Logout = () => {
+   const { t } = useTranslation()
+-  const navigate = useNavigate()
+-
+   const { mutateAsync: logoutMutation } = useLogout()
+ 
+   const handleLogout = async () => {
+-    await logoutMutation(undefined, {
+-      onSuccess: () => {
+-        /**
+-         * When the user logs out, we want to clear the query cache
+-         */
+-        queryClient.clear()
+-        navigate("/login")
+-      },
+-    })
++    await queryClient.cancelQueries()
++    try {
++      await logoutMutation()
++    } finally {
++      queryClient.clear()
++      window.location.replace("/app/login")
++    }
+   }
+ 
+   return (
+diff --git a/node_modules/@medusajs/dashboard/src/components/layout/user-menu/user-menu.tsx b/node_modules/@medusajs/dashboard/src/components/layout/user-menu/user-menu.tsx
+index c1a4d97..6fab4f4 100644
+--- a/node_modules/@medusajs/dashboard/src/components/layout/user-menu/user-menu.tsx
++++ b/node_modules/@medusajs/dashboard/src/components/layout/user-menu/user-menu.tsx
+@@ -24,7 +24,7 @@ import { useTranslation } from "react-i18next"
+ import { Skeleton } from "../../common/skeleton"
+ 
+ import { useState } from "react"
+-import { Link, useLocation, useNavigate } from "react-router-dom"
++import { Link, useLocation } from "react-router-dom"
+ import { useLogout, useMe } from "../../../hooks/api"
+ import { queryClient } from "../../../lib/query-client"
+ import { useGlobalShortcuts } from "../../../providers/keybind-provider/hooks"
+@@ -196,20 +196,16 @@ const ThemeToggle = () => {
+ 
+ const Logout = () => {
+   const { t } = useTranslation()
+-  const navigate = useNavigate()
+-
+   const { mutateAsync: logoutMutation } = useLogout()
+ 
+   const handleLogout = async () => {
+-    await logoutMutation(undefined, {
+-      onSuccess: () => {
+-        /**
+-         * When the user logs out, we want to clear the query cache
+-         */
+-        queryClient.clear()
+-        navigate("/login")
+-      },
+-    })
++    await queryClient.cancelQueries()
++    try {
++      await logoutMutation()
++    } finally {
++      queryClient.clear()
++      window.location.replace("/app/login")
++    }
+   }
+ 
+   return (
+diff --git a/node_modules/@medusajs/dashboard/src/providers/keybind-provider/hooks.tsx b/node_modules/@medusajs/dashboard/src/providers/keybind-provider/hooks.tsx
+index 3b3c876..b3889a1 100644
+--- a/node_modules/@medusajs/dashboard/src/providers/keybind-provider/hooks.tsx
++++ b/node_modules/@medusajs/dashboard/src/providers/keybind-provider/hooks.tsx
+@@ -96,17 +96,16 @@ export const useShortcuts = ({
+ 
+ export const useGlobalShortcuts = () => {
+   const { t } = useTranslation()
+-  const navigate = useNavigate()
+-
+   const { mutateAsync } = useLogout()
+ 
+   const handleLogout = async () => {
+-    await mutateAsync(undefined, {
+-      onSuccess: () => {
+-        queryClient.clear()
+-        navigate("/login")
+-      },
+-    })
++    await queryClient.cancelQueries()
++    try {
++      await mutateAsync()
++    } finally {
++      queryClient.clear()
++      window.location.replace("/app/login")
++    }
+   }
+ 
+   const globalShortcuts: Shortcut[] = [
+diff --git a/node_modules/@medusajs/dashboard/dist/chunk-IR5DHEKS.mjs b/node_modules/@medusajs/dashboard/dist/chunk-IR5DHEKS.mjs
+--- a/node_modules/@medusajs/dashboard/dist/chunk-IR5DHEKS.mjs
++++ b/node_modules/@medusajs/dashboard/dist/chunk-IR5DHEKS.mjs
+@@ -1,6 +1,12 @@
+ // src/lib/format-provider.ts
+ var formatProvider = (id) => {
+-  const [_, name, type] = id.split("_");
++  if (!id) {
++    return "Unknown provider";
++  }
++  const parts = id.split("_");
++  const hasProviderPrefix = parts[0] === "pp";
++  const name = hasProviderPrefix ? parts[1] || id : parts.join("-");
++  const type = hasProviderPrefix ? parts[2] : void 0;
+   return name.split("-").map((s) => s.charAt(0).toUpperCase() + s.slice(1)).join(" ") + (type ? ` (${type.toUpperCase()})` : "");
+ };
+ 
+diff --git a/node_modules/@medusajs/dashboard/src/lib/format-provider.ts b/node_modules/@medusajs/dashboard/src/lib/format-provider.ts
+--- a/node_modules/@medusajs/dashboard/src/lib/format-provider.ts
++++ b/node_modules/@medusajs/dashboard/src/lib/format-provider.ts
+@@ -8,7 +8,15 @@
+  * @returns A formatted string
+  */
+-export const formatProvider = (id: string) => {
+-  const [_, name, type] = id.split("_")
++export const formatProvider = (id?: string) => {
++  if (!id) {
++    return "Unknown provider"
++  }
++
++  const parts = id.split("_")
++  const hasProviderPrefix = parts[0] === "pp"
++  const name = hasProviderPrefix ? parts[1] || id : parts.join("-")
++  const type = hasProviderPrefix ? parts[2] : undefined
++
+   return (
+     name
+       .split("-")
