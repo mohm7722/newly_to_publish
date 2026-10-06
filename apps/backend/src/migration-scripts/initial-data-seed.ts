@@ -34,6 +34,22 @@ export default async function initial_data_seed({
     ModuleRegistrationName.FULFILLMENT
   );
 
+  // Hard guard for migrated / production databases: never seed demo data when
+  // the store is already provisioned. Any real store has at least one region,
+  // while a truly fresh install has none. This runs before the per-entity
+  // baseline check below so a customized store (renamed regions/products) can
+  // never trigger a partial seed that creates duplicate channels/keys/stores.
+  const existingRegions = await query.graph({
+    entity: "region",
+    fields: ["id"],
+  });
+  if (existingRegions.data.length > 0) {
+    logger.info(
+      "Store already has region(s); skipping demo data seed (populated/migrated database)."
+    );
+    return;
+  }
+
   // This script provisions a complete demo baseline. Re-running it after the
   // baseline exists used to duplicate channels, keys, stores, locations, and
   // products. Detect the complete baseline up front and make subsequent runs a

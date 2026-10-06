@@ -109,26 +109,27 @@ cd /www/wwwroot/newly/deploy/aapanel
 `http://localhost:9000/static/` إلى `https://www.newlyye.com/static/` داخل قاعدة
 البيانات. يجب أن يُظهر التقرير `0` روابط متبقية على localhost.
 
-## 7) البناء + الترحيل
+## 7) البناء + الترحيل + التشغيل (أمر واحد)
 
+تأكّد أولاً من تثبيت PM2:
+```bash
+pm2 -v || npm install -g pm2
+```
+ثم:
 ```bash
 cd /www/wwwroot/newly/deploy/aapanel
-./build-and-migrate.sh
+bash build-and-migrate.sh
 ```
-يُثبّت الاعتماديات، يبني الـ backend (الخادم + لوحة الأدمن)، يُشغّل الترحيلات
-(لا تأثير فعلي لأن الاستيراد بنفس الإصدار — لن تُمسح أي بيانات)، ثم يبني الـ storefront.
+السكربت ينفّذ بالترتيب: تثبيت الاعتماديات ← بناء الـ backend ولوحة الأدمن ←
+الترحيلات ← **تشغيل الـ backend عبر PM2** (ضروري لأن بناء المتجر يجلب بيانات
+التصنيفات وقت البناء) ← انتظار صحة `/health` ← بناء المتجر ← تشغيل المتجر عبر PM2
+← `pm2 save`.
 
-## 8) تشغيل العمليتين عبر PM2
+## 8) تثبيت التشغيل التلقائي والتحقق
 
 ```bash
-cd /www/wwwroot/newly
-pm2 start ecosystem.config.js
-pm2 save
-pm2 startup    # نفّذ السطر الذي يطبعه ليعمل PM2 تلقائياً بعد إعادة التشغيل
+pm2 startup     # نفّذ السطر الذي يطبعه ليعمل PM2 تلقائياً بعد إعادة التشغيل
 pm2 status
-```
-تحقّق محلياً قبل ربط الدومين:
-```bash
 curl -I http://127.0.0.1:9000/health   # الـ backend
 curl -I http://127.0.0.1:8000/         # الـ storefront
 ```
