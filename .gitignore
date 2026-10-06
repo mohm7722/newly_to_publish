@@ -84,3 +84,8 @@ apps/backend/data/
 *.rar
 *.zip
 *.7z
+
+# Lockfile is intentionally NOT committed: a Windows-generated lockfile breaks
+# install of platform-native binaries (swc/rollup/next-swc/lightningcss) on the
+# Linux server. Each environment resolves its own lockfile instead.
+package-lock.json
