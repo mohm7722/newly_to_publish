@@ -16,33 +16,33 @@ import {
 const contacts = [
   {
     label: "واتساب",
-    value: "+967 771 234 567",
+    value: "+967 770 900 014",
     hint: "محادثة سريعة مع فريق الدعم",
-    href: "https://wa.me/967771234567",
+    href: "https://wa.me/967770900014",
     icon: MessageCircle,
     iconStyle: "bg-emerald-50 text-emerald-600",
   },
   {
     label: "اتصل بنا",
-    value: "+967 771 234 567",
+    value: "+967 770 900 014",
     hint: "للمساعدة المباشرة هاتفيًا",
-    href: "tel:+967771234567",
+    href: "tel:+967770900014",
     icon: Phone,
     iconStyle: "bg-blue-50 text-blue-600",
   },
   {
     label: "البريد الإلكتروني",
-    value: "info@newlystore.com",
+    value: "admin@newlyye.com",
     hint: "للاستفسارات والمرفقات",
-    href: "mailto:info@newlystore.com",
+    href: "mailto:admin@newlyye.com",
     icon: Mail,
     iconStyle: "bg-rose-50 text-rose-600",
   },
   {
     label: "موقعنا",
-    value: "عدن، اليمن",
+    value: "تعز، اليمن",
     hint: "عرض الموقع على الخريطة",
-    href: "https://maps.google.com/?q=%D8%B9%D8%AF%D9%86%D8%8C%20%D8%A7%D9%84%D9%8A%D9%85%D9%86",
+    href: "https://maps.google.com/?q=%D9%85%D8%AA%D8%AC%D8%B1%20%D9%86%D9%8A%D9%88%D9%84%D9%8A%20%D9%8A%D9%85%D9%86%D8%8C%20%D9%85%D9%82%D8%A7%D8%A8%D9%84%20%D8%A8%D9%86%D9%83%20%D8%A7%D9%84%D8%AA%D8%B6%D8%A7%D9%85%D9%86%D8%8C%20%D8%AC%D9%85%D8%A7%D9%84%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D9%86%D8%A7%D8%B5%D8%B1%D8%8C%20%D8%AA%D8%B9%D8%B2%D8%8C%20%D8%A7%D9%84%D9%8A%D9%85%D9%86",
     icon: MapPin,
     iconStyle: "bg-violet-50 text-violet-600",
   },
@@ -71,7 +71,7 @@ export default function ContactPage() {
               سواء كان استفسارك عن طلب أو دفع أو شحن أو استبدال، اختر وسيلة التواصل المناسبة وسيسعد فريق نيولي بخدمتك.
             </p>
             <a
-              href="https://wa.me/967771234567"
+              href="https://wa.me/967770900014"
               target="_blank"
               rel="noopener noreferrer"
               className="mt-7 inline-flex min-h-12 items-center justify-center gap-2 rounded-xl bg-[#82ac40] px-6 py-3 font-bold text-white shadow-lg shadow-black/15 transition hover:bg-[#739a38] focus:outline-none focus:ring-2 focus:ring-white/70"

@@ -26,10 +26,10 @@ const quickLinks = [
 ]
 
 const socialLinks = [
-  { icon: <Facebook className="w-5 h-5" />, href: "#", name: "Facebook", extra: "hover:text-blue-400" },
-  { icon: <Instagram className="w-5 h-5" />, href: "#", name: "Instagram", extra: "hover:text-pink-400" },
-  { icon: <Twitter className="w-5 h-5" />, href: "#", name: "Twitter", extra: "hover:text-blue-300" },
-  { icon: <Youtube className="w-5 h-5" />, href: "#", name: "Youtube", extra: "hover:text-red-400" },
+  { icon: <Facebook className="w-5 h-5" />, href: "https://www.facebook.com/newlyy", name: "Facebook", extra: "hover:text-blue-400" },
+  { icon: <Instagram className="w-5 h-5" />, href: "https://www.instagram.com/newlyye", name: "Instagram", extra: "hover:text-pink-400" },
+  { icon: <Twitter className="w-5 h-5" />, href: "https://x.com/newlyye", name: "Twitter", extra: "hover:text-blue-300" },
+  { icon: <Youtube className="w-5 h-5" />, href: "https://youtube.com/@newlyye", name: "Youtube", extra: "hover:text-red-400" },
 ]
 
 const services = [
@@ -69,6 +69,8 @@ export default function Footer() {
                   <a
                     key={i}
                     href={s.href}
+                    target="_blank"
+                    rel="noopener noreferrer"
                     className={`w-10 h-10 bg-white/10 hover:bg-white/20 rounded-full flex items-center justify-center transition-all duration-300 ${s.extra}`}
                     aria-label={s.name}
                   >
@@ -127,7 +129,7 @@ export default function Footer() {
               {/* الديسكتوب – قابل للنقر */}
               <div className="hidden md:block space-y-3">
                 <a
-                  href="https://wa.me/967771234567"
+                  href="https://wa.me/967770900014"
                   className="flex items-center space-x-3 space-x-reverse group"
                   aria-label="واتساب"
                   target="_blank"
@@ -140,12 +142,12 @@ export default function Footer() {
                     <p className="text-sm text-gray-300 group-hover:text-white transition-colors">
                       واتساب
                     </p>
-                    <p className="text-white font-medium">+967 771 234 567</p>
+                    <p className="text-white font-medium">+967 770 900 014</p>
                   </div>
                 </a>
 
                 <a
-                  href="tel:+967771234567"
+                  href="tel:+967770900014"
                   className="flex items-center space-x-3 space-x-reverse group"
                   aria-label="هاتف"
                 >
@@ -156,12 +158,12 @@ export default function Footer() {
                     <p className="text-sm text-gray-300 group-hover:text-white transition-colors">
                       هاتف
                     </p>
-                    <p className="text-white font-medium">+967 771 234 567</p>
+                    <p className="text-white font-medium">+967 770 900 014</p>
                   </div>
                 </a>
 
                 <a
-                  href="mailto:info@newlystore.com"
+                  href="mailto:admin@newlyye.com"
                   className="flex items-center space-x-3 space-x-reverse group"
                   aria-label="البريد الإلكتروني"
                 >
@@ -172,12 +174,12 @@ export default function Footer() {
                     <p className="text-sm text-gray-300 group-hover:text-white transition-colors">
                       البريد الإلكتروني
                     </p>
-                    <p className="text-white font-medium">info@newlystore.com</p>
+                    <p className="text-white font-medium">admin@newlyye.com</p>
                   </div>
                 </a>
 
                 <a
-                  href="https://maps.google.com/?q=%D8%B9%D8%AF%D9%86%D8%8C%20%D8%A7%D9%84%D9%8A%D9%85%D9%86"
+                  href="https://maps.google.com/?q=%D9%85%D8%AA%D8%AC%D8%B1%20%D9%86%D9%8A%D9%88%D9%84%D9%8A%20%D9%8A%D9%85%D9%86%D8%8C%20%D9%85%D9%82%D8%A7%D8%A8%D9%84%20%D8%A8%D9%86%D9%83%20%D8%A7%D9%84%D8%AA%D8%B6%D8%A7%D9%85%D9%86%D8%8C%20%D8%AC%D9%85%D8%A7%D9%84%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D9%86%D8%A7%D8%B5%D8%B1%D8%8C%20%D8%AA%D8%B9%D8%B2%D8%8C%20%D8%A7%D9%84%D9%8A%D9%85%D9%86"
                   className="flex items-center space-x-3 space-x-reverse group"
                   aria-label="العنوان"
                   target="_blank"
@@ -190,7 +192,7 @@ export default function Footer() {
                     <p className="text-sm text-gray-300 group-hover:text-white transition-colors">
                       العنوان
                     </p>
-                    <p className="text-white font-medium">عدن، اليمن</p>
+                    <p className="text-white font-medium">تعز، اليمن</p>
                   </div>
                 </a>
               </div>
@@ -198,7 +200,7 @@ export default function Footer() {
               {/* الجوال – صف واحد مع روابط */}
               <div className="grid grid-cols-4 gap-4 mt-4 md:hidden">
                 <a
-                  href="https://wa.me/967771234567"
+                  href="https://wa.me/967770900014"
                   className="flex flex-col items-center text-center group"
                   aria-label="واتساب"
                   target="_blank"
@@ -213,7 +215,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="tel:+967771234567"
+                  href="tel:+967770900014"
                   className="flex flex-col items-center text-center group"
                   aria-label="هاتف"
                 >
@@ -226,7 +228,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="mailto:info@newlystore.com"
+                  href="mailto:admin@newlyye.com"
                   className="flex flex-col items-center text-center group"
                   aria-label="البريد الإلكتروني"
                 >
@@ -239,7 +241,7 @@ export default function Footer() {
                 </a>
 
                 <a
-                  href="https://maps.google.com/?q=%D8%B9%D8%AF%D9%86%D8%8C%20%D8%A7%D9%84%D9%8A%D9%85%D9%86"
+                  href="https://maps.google.com/?q=%D9%85%D8%AA%D8%AC%D8%B1%20%D9%86%D9%8A%D9%88%D9%84%D9%8A%20%D9%8A%D9%85%D9%86%D8%8C%20%D9%85%D9%82%D8%A7%D8%A8%D9%84%20%D8%A8%D9%86%D9%83%20%D8%A7%D9%84%D8%AA%D8%B6%D8%A7%D9%85%D9%86%D8%8C%20%D8%AC%D9%85%D8%A7%D9%84%20%D8%B9%D8%A8%D8%AF%20%D8%A7%D9%84%D9%86%D8%A7%D8%B5%D8%B1%D8%8C%20%D8%AA%D8%B9%D8%B2%D8%8C%20%D8%A7%D9%84%D9%8A%D9%85%D9%86"
                   className="flex flex-col items-center text-center group"
                   aria-label="العنوان"
                   target="_blank"
