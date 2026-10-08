@@ -40,6 +40,8 @@ export default async function PageLayout(props: { children: React.ReactNode }) {
       )}
       {props.children}
       <Footer />
+      {/* Spacer so the fixed mobile bottom nav never covers footer content. */}
+      <div aria-hidden className="h-16 md:hidden" />
     </>
   )
 }

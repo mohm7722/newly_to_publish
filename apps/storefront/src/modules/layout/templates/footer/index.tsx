@@ -307,9 +307,9 @@ export default function Footer() {
                   target="_blank"
                   rel="noopener noreferrer"
                   className="font-medium text-white underline-offset-4 hover:underline"
-                  aria-label="تواصل مع Mohammed AL-HURAIBY عبر واتساب"
+                  aria-label="تواصل مع MOHAMMED AL-HURAIBY عبر واتساب"
                 >
-                  Mohammed AL-HURAIBY
+                  MOHAMMED AL-HURAIBY
                 </a>
               </span>
               <div className="flex items-center space-x-1 space-x-reverse">
