@@ -6,7 +6,7 @@ import { ArrowRightMini } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { Text, clx } from "@modules/common/components/ui"
-import { Fragment, useState } from "react"
+import { Fragment } from "react"
 import {
   Menu,
   X,
@@ -18,60 +18,30 @@ import {
   MapPin,
   Coins,
   ChevronLeft,
-  ChevronDown,
-  LayoutGrid,
-  PackageSearch,
-  RefreshCcw,
-  HelpCircle,
-  Phone,
-  Star,
-  Info,
-  Shield,
-  FileText,
-  MessageCircle,
 } from "lucide-react"
 import { useParams, usePathname } from "next/navigation"
 import CountrySelect from "../country-select"
 import CurrencySwitcher from "../currency-switcher"
 import LanguageSelect from "../language-select"
 import { Locale } from "@lib/data/locales"
-import { NavCategory } from "../nav-types"
 
 const iconBtn =
   "p-2.5 rounded-xl text-gray-700 hover:text-red-600 hover:bg-gray-50 active:scale-95 transition-colors transition-transform"
 
-/** Primary browse links. */
-const browseItems = [
+const SideMenuItems = [
   { name: "الرئيسية", href: "/", icon: Home },
-  { name: "كل المنتجات", href: "/store", icon: Store },
+  { name: "المتجر", href: "/store", icon: Store },
   { name: "الحساب", href: "/account", icon: User },
   { name: "السلة", href: "/cart", icon: ShoppingBag },
-]
-
-/** Help / service links. */
-const helpItems = [
-  { name: "تتبع الطلب", href: "/track", icon: PackageSearch },
-  { name: "الاستبدال والإرجاع", href: "/returns", icon: RefreshCcw },
-  { name: "الأسئلة الشائعة", href: "/faq", icon: HelpCircle },
-  { name: "اتصل بنا", href: "/contact", icon: Phone },
-  { name: "شارك رأيك", href: "/reviews/new", icon: Star },
-]
-
-/** Informational / legal links. */
-const infoItems = [
-  { name: "من نحن", href: "/about", icon: Info },
-  { name: "سياسة الخصوصية", href: "/privacy", icon: Shield },
-  { name: "الشروط والأحكام", href: "/terms", icon: FileText },
 ]
 
 type SideMenuProps = {
   regions: HttpTypes.StoreRegion[] | null
   locales: Locale[] | null
   currentLocale: string | null
-  categories: NavCategory[]
 }
 
-const SideMenu = ({ regions, locales, currentLocale, categories }: SideMenuProps) => {
+const SideMenu = ({ regions, locales, currentLocale }: SideMenuProps) => {
   const countryToggleState = useToggleState()
   const languageToggleState = useToggleState()
   const currencyToggleState = useToggleState()
@@ -79,63 +49,12 @@ const SideMenu = ({ regions, locales, currentLocale, categories }: SideMenuProps
   const { countryCode } = useParams()
   const pathname = usePathname()
 
-  const [openCat, setOpenCat] = useState<string | null>(null)
-
   const isActive = (href: string) => {
     const base = `/${countryCode}`
     if (href === "/") {
       return pathname === base || pathname === `${base}/`
     }
     return pathname === `${base}${href}` || pathname.startsWith(`${base}${href}/`)
-  }
-
-  const sectionLabel =
-    "px-3 pb-2 pt-4 text-xs font-semibold text-gray-400"
-
-  const linkRow = (
-    name: string,
-    href: string,
-    Icon: React.ComponentType<{ className?: string }>,
-    close: () => void
-  ) => {
-    const active = isActive(href)
-    return (
-      <li key={name}>
-        <LocalizedClientLink
-          href={href}
-          onClick={close}
-          data-testid={`${name}-link`}
-          className={clx(
-            "group flex items-center justify-between rounded-xl px-3 py-2.5 transition-colors",
-            active
-              ? "bg-neoly-primary/10 text-neoly-primary"
-              : "text-gray-700 hover:bg-gray-50 hover:text-neoly-primary"
-          )}
-        >
-          <span className="flex items-center gap-3">
-            <span
-              className={clx(
-                "flex items-center justify-center w-9 h-9 rounded-lg transition-colors",
-                active
-                  ? "bg-neoly-primary text-white"
-                  : "bg-gray-100 text-gray-600 group-hover:bg-neoly-primary/10 group-hover:text-neoly-primary"
-              )}
-            >
-              <Icon className="w-5 h-5" />
-            </span>
-            <span className="text-base font-medium">{name}</span>
-          </span>
-          <ChevronLeft
-            className={clx(
-              "w-4 h-4 transition-transform",
-              active
-                ? "text-neoly-primary"
-                : "text-gray-300 group-hover:text-neoly-primary group-hover:-translate-x-0.5"
-            )}
-          />
-        </LocalizedClientLink>
-      </li>
-    )
   }
 
   return (
@@ -220,111 +139,66 @@ const SideMenu = ({ regions, locales, currentLocale, categories }: SideMenuProps
                     </p>
                   </div>
 
-                  {/* Scrollable content */}
-                  <nav className="flex-1 overflow-y-auto px-3 pb-4">
-                    {/* تصفّح */}
-                    <p className={sectionLabel}>التصفّح</p>
+                  {/* Navigation */}
+                  <nav className="flex-1 overflow-y-auto px-3 py-4">
+                    <p className="px-3 pb-2 text-xs font-semibold text-gray-400">
+                      التصفّح
+                    </p>
                     <ul className="flex flex-col gap-1">
-                      {browseItems.map(({ name, href, icon: Icon }) =>
-                        linkRow(name, href, Icon, close)
-                      )}
-                    </ul>
-
-                    {/* التصنيفات (ديناميكية) */}
-                    {categories.length > 0 && (
-                      <>
-                        <p className={sectionLabel}>التصنيفات</p>
-                        <ul className="flex flex-col gap-1">
-                          {categories.map((cat) => {
-                            const hasChildren = cat.children.length > 0
-                            const isOpen = openCat === cat.id
-                            return (
-                              <li key={cat.id}>
-                                <div
+                      {SideMenuItems.map(({ name, href, icon: Icon }) => {
+                        const active = isActive(href)
+                        return (
+                          <li key={name}>
+                            <LocalizedClientLink
+                              href={href}
+                              onClick={close}
+                              data-testid={`${name}-link`}
+                              className={clx(
+                                "group flex items-center justify-between rounded-xl px-3 py-3 transition-colors",
+                                active
+                                  ? "bg-neoly-primary/10 text-neoly-primary"
+                                  : "text-gray-700 hover:bg-gray-50 hover:text-neoly-primary"
+                              )}
+                            >
+                              <span className="flex items-center gap-3">
+                                <span
                                   className={clx(
-                                    "group flex items-center rounded-xl transition-colors",
-                                    "text-gray-700 hover:bg-gray-50"
+                                    "flex items-center justify-center w-9 h-9 rounded-lg transition-colors",
+                                    active
+                                      ? "bg-neoly-primary text-white"
+                                      : "bg-gray-100 text-gray-600 group-hover:bg-neoly-primary/10 group-hover:text-neoly-primary"
                                   )}
                                 >
-                                  <LocalizedClientLink
-                                    href={`/store/${cat.handle}`}
-                                    onClick={close}
-                                    className="flex flex-1 items-center gap-3 px-3 py-2.5 hover:text-neoly-primary"
-                                  >
-                                    <span className="flex items-center justify-center w-9 h-9 rounded-lg bg-gray-100 text-gray-600 group-hover:bg-neoly-primary/10 group-hover:text-neoly-primary">
-                                      <LayoutGrid className="w-5 h-5" />
-                                    </span>
-                                    <span className="text-base font-medium">
-                                      {cat.name}
-                                    </span>
-                                  </LocalizedClientLink>
-                                  {hasChildren && (
-                                    <button
-                                      type="button"
-                                      aria-label={`فتح ${cat.name}`}
-                                      aria-expanded={isOpen}
-                                      onClick={() =>
-                                        setOpenCat(isOpen ? null : cat.id)
-                                      }
-                                      className="p-2 ml-1 text-gray-400 hover:text-neoly-primary"
-                                    >
-                                      <ChevronDown
-                                        className={clx(
-                                          "w-5 h-5 transition-transform",
-                                          isOpen ? "rotate-180" : ""
-                                        )}
-                                      />
-                                    </button>
-                                  )}
-                                </div>
-                                {hasChildren && isOpen && (
-                                  <ul className="mb-1 mr-4 flex flex-col gap-0.5 border-r border-gray-100 pr-3">
-                                    {cat.children.map((child) => (
-                                      <li key={child.id}>
-                                        <LocalizedClientLink
-                                          href={`/store/${child.handle}`}
-                                          onClick={close}
-                                          className="block rounded-lg px-3 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-neoly-primary"
-                                        >
-                                          {child.name}
-                                        </LocalizedClientLink>
-                                      </li>
-                                    ))}
-                                  </ul>
+                                  <Icon className="w-5 h-5" />
+                                </span>
+                                <span className="text-base font-medium">
+                                  {name}
+                                </span>
+                              </span>
+                              <ChevronLeft
+                                className={clx(
+                                  "w-4 h-4 transition-transform",
+                                  active
+                                    ? "text-neoly-primary"
+                                    : "text-gray-300 group-hover:text-neoly-primary group-hover:-translate-x-0.5"
                                 )}
-                              </li>
-                            )
-                          })}
-                        </ul>
-                      </>
-                    )}
-
-                    {/* مساعدة وخدمة */}
-                    <p className={sectionLabel}>مساعدة وخدمة</p>
-                    <ul className="flex flex-col gap-1">
-                      {helpItems.map(({ name, href, icon: Icon }) =>
-                        linkRow(name, href, Icon, close)
-                      )}
-                    </ul>
-
-                    {/* معلومات */}
-                    <p className={sectionLabel}>معلومات</p>
-                    <ul className="flex flex-col gap-1">
-                      {infoItems.map(({ name, href, icon: Icon }) =>
-                        linkRow(name, href, Icon, close)
-                      )}
+                              />
+                            </LocalizedClientLink>
+                          </li>
+                        )
+                      })}
                     </ul>
                   </nav>
 
                   {/* Settings */}
-                  <div className="shrink-0 border-t border-gray-100 px-3 py-3">
+                  <div className="shrink-0 border-t border-gray-100 px-3 py-4">
                     <p className="px-3 pb-2 text-xs font-semibold text-gray-400">
                       الإعدادات
                     </p>
                     <div className="flex flex-col gap-1">
                       {!!locales?.length && (
                         <div
-                          className="flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors"
+                          className="flex items-center justify-between gap-2 rounded-xl px-3 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
                           onMouseEnter={languageToggleState.open}
                           onMouseLeave={languageToggleState.close}
                         >
@@ -349,7 +223,7 @@ const SideMenu = ({ regions, locales, currentLocale, categories }: SideMenuProps
 
                       {regions && (
                         <div
-                          className="flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors"
+                          className="flex items-center justify-between gap-2 rounded-xl px-3 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
                           onMouseEnter={countryToggleState.open}
                           onMouseLeave={countryToggleState.close}
                         >
@@ -372,7 +246,7 @@ const SideMenu = ({ regions, locales, currentLocale, categories }: SideMenuProps
                       )}
 
                       <div
-                        className="flex items-center justify-between gap-2 rounded-xl px-3 py-2.5 text-gray-700 hover:bg-gray-50 transition-colors"
+                        className="flex items-center justify-between gap-2 rounded-xl px-3 py-3 text-gray-700 hover:bg-gray-50 transition-colors"
                         onMouseEnter={currencyToggleState.open}
                         onMouseLeave={currencyToggleState.close}
                       >
@@ -392,19 +266,11 @@ const SideMenu = ({ regions, locales, currentLocale, categories }: SideMenuProps
                     </div>
                   </div>
 
-                  {/* Footer - تواصل سريع */}
+                  {/* Footer */}
                   <div className="shrink-0 border-t border-gray-100 px-6 py-4">
-                    <a
-                      href="https://wa.me/967770900014"
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="flex items-center justify-center gap-2 rounded-xl bg-[#82ac40] px-4 py-2.5 text-sm font-bold text-white transition hover:bg-[#739a38]"
-                    >
-                      <MessageCircle className="w-4 h-4" />
-                      تواصل عبر واتساب
-                    </a>
-                    <Text className="mt-3 block text-center text-xs text-gray-400">
-                      © {new Date().getFullYear()} متجر نيولي
+                    <Text className="text-xs text-gray-400">
+                      © {new Date().getFullYear()} متجر نيولي. جميع الحقوق
+                      محفوظة.
                     </Text>
                   </div>
                 </PopoverPanel>
