@@ -23,6 +23,7 @@ const quickLinks = [
   { name: "أسئلة شائعة", href: "/faq" },
   { name: "الاستبدال والإرجاع", href: "/returns" },
   { name: "تتبع الطلب", href: "/track" },
+  { name: "شارك رأيك", href: "/reviews/new" },
 ]
 
 const socialLinks = [
@@ -299,7 +300,18 @@ export default function Footer() {
               © {new Date().getFullYear()} متجر نيولي. جميع الحقوق محفوظة
             </p>
             <div className="flex items-center space-x-4 space-x-reverse">
-              <span>صُنع بـ ❤️ بواسطة نيولي</span>
+              <span>
+                صُمم عبر{" "}
+                <a
+                  href="https://wa.me/967736245628"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="font-medium text-white underline-offset-4 hover:underline"
+                  aria-label="تواصل مع Mohammed AL-HURAIBY عبر واتساب"
+                >
+                  Mohammed AL-HURAIBY
+                </a>
+              </span>
               <div className="flex items-center space-x-1 space-x-reverse">
                 <Clock className="w-4 h-4" />
                 <span>نعمل 24/7</span>

@@ -89,6 +89,7 @@ export const DEFAULT_ROLES: readonly DefaultRole[] = [
     permissions: compose(
       permissionsFor(["orders", "draft_orders", "returns", "exchanges", "claims"]),
       permissionsFor(["customers"], ["read", "update"]),
+      permissionsFor(["reviews"]),
       permissionsFor(["analytics"]),
       permissionsFor(
         ["products", "promotions", "price_lists", "shipping_cities", "shipping_options"],
@@ -140,6 +141,7 @@ export const DEFAULT_ROLES: readonly DefaultRole[] = [
       permissionsFor(["orders", "draft_orders", "exchanges", "claims"], ["read"]),
       permissionsFor(["returns"], ["read", "create"]),
       permissionsFor(["customers"], ["read", "update"]),
+      permissionsFor(["reviews"], ["read", "update"]),
       permissionsFor(["products"], ["read"])
     ),
   },

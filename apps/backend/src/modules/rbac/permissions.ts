@@ -89,6 +89,7 @@ export const RESOURCES: readonly ResourceDef[] = [
   { resource: "promotions", segments: ["promotions"], actions: CRUD, group: "marketing", label: "العروض الترويجية" },
   { resource: "campaigns", segments: ["campaigns"], actions: CRUD, group: "marketing", label: "الحملات" },
   { resource: "abandoned_carts", segments: ["abandoned-carts"], actions: RU, group: "marketing", label: "السلال المهجورة" },
+  { resource: "reviews", segments: ["reviews"], actions: ["read", "update", "delete"], group: "marketing", label: "آراء العملاء" },
 
   // ── Pricing ─────────────────────────────────────────────────────────────────
   { resource: "price_lists", segments: ["price-lists"], actions: CRUD, group: "pricing", label: "قوائم الأسعار" },

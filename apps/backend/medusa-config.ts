@@ -124,6 +124,8 @@ module.exports = defineConfig({
     { resolve: "./src/modules/invoicing" },
     // Abandoned-cart reminder tracking (reminder counts + cooldown state).
     { resolve: "./src/modules/abandoned-cart" },
+    // Customer reviews / testimonials (store-level + per-product).
+    { resolve: "./src/modules/reviews" },
     // File storage (local disk). `backend_url` is what gets baked into stored
     // image URLs at upload time, so in production set FILE_BACKEND_URL to the
     // public HTTPS origin (e.g. https://www.newlyye.com/static); otherwise new

@@ -5,6 +5,7 @@ import { getCollectionByHandle } from "@lib/data/collections"
 import { listCategories } from "@lib/data/categories"
 import { getRegion } from "@lib/data/regions"
 import { listProducts } from "@lib/data/products"
+import { listFeaturedReviews } from "@lib/data/reviews"
 import { HttpTypes } from "@medusajs/types"
 import { getProductPrice } from "@lib/util/get-product-price"
 import LocalizedClientLink from "@modules/common/components/localized-client-link"
@@ -44,6 +45,9 @@ export default async function Page({ params }: PageProps) {
 
   const { response } = await listProducts({ regionId: region.id })
   const products: StoreProduct[] = response.products
+
+  // Approved, featured customer testimonials for the "آراء العملاء" section.
+  const testimonials = await listFeaturedReviews()
 
   // Fetch only products in the "new-products" collection for the New Arrivals section
   const newCollection = await getCollectionByHandle("new-products")
@@ -434,6 +438,8 @@ export default async function Page({ params }: PageProps) {
       </section>
 
       {/* Testimonials Section - سلايدر أفقي محسّن */}
+      {/* يظهر فقط عند وجود مراجعات معتمدة؛ لا تُعرض بيانات وهمية. */}
+      {testimonials.length > 0 && (
       <section className="relative py-20 bg-white">
         <div className="max-w-container mx-auto px-4">
           {/* العنوان */}
@@ -452,42 +458,15 @@ export default async function Page({ params }: PageProps) {
             <div className="pointer-events-none absolute inset-y-0 left-0 w-10 bg-gradient-to-r from-white to-transparent z-10" />
 
             {/* المسار القابل للتمرير (LTR للحركة، والبطاقات RTL) */}
+            {/* ملاحظة: overflow-x-auto يحوّل overflow-y إلى auto فيقصّ الشارة البارزة والظل،
+                لذا نضيف هامشًا رأسيًا داخليًا (py) مع هوامش سالبة معادِلة لمنع القصّ. */}
             <div
               dir="ltr"
-              className="flex gap-4 overflow-x-auto snap-x snap-mandatory pr-4 -mr-4 no-scrollbar scroll-smooth"
+              className="flex gap-4 overflow-x-auto snap-x snap-mandatory pr-4 -mr-4 py-6 -my-6 no-scrollbar scroll-smooth"
             >
-              {[
-                {
-                  name: "أحمد محمد",
-                  comment:
-                    "جودة ممتازة وسرعة في التوصيل. تجربة رائعة فعلًا! خدمة العملاء متجاوبة جدًا.",
-                  rating: 5,
-                  avatar: "👨‍💼",
-                },
-                {
-                  name: "نورة علي",
-                  comment:
-                    "المنتجات مطابقة للوصف والتغليف أنيق. تصلني الطلبات في الوقت المحدد دائمًا.",
-                  rating: 5,
-                  avatar: "👩‍💼",
-                },
-                {
-                  name: "سالم منصور",
-                  comment:
-                    "الأسعار مناسبة والخدمة ممتازة. بالتأكيد سأعيد الشراء مرة أخرى.",
-                  rating: 4,
-                  avatar: "👨‍🔧",
-                },
-                {
-                  name: "ليان سامي",
-                  comment:
-                    "تجربة تسوق ممتعة وسهلة. المنتجات فعلاً كما في الصور — شكراً نيولي!",
-                  rating: 5,
-                  avatar: "👩‍🎓",
-                },
-              ].map((r, i) => (
+              {testimonials.map((r, i) => (
                 <div
-                  key={i}
+                  key={r.id || i}
                   dir="rtl"
                   className="shrink-0 snap-start w-[85%] sm:w-[60%] md:w-[45%] lg:w-[32%]"
                 >
@@ -520,12 +499,14 @@ export default async function Page({ params }: PageProps) {
 
                     {/* العميل */}
                     <div className="flex items-center space-x-3 space-x-reverse">
-                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-xl ring-2 ring-neoly-accent/30">
-                        {r.avatar}
+                      <div className="w-10 h-10 rounded-full bg-gray-100 flex items-center justify-center text-lg font-bold text-neoly-primary ring-2 ring-neoly-accent/30">
+                        {r.name?.trim().charAt(0) || "ع"}
                       </div>
                       <div>
                         <p className="font-semibold text-neoly-primary">{r.name}</p>
-                        <p className="text-xs text-gray-500">عميل موثوق</p>
+                        <p className="text-xs text-gray-500">
+                          {r.is_verified ? "عميل موثوق" : r.city || "عميل"}
+                        </p>
                       </div>
                     </div>
                   </article>
@@ -534,7 +515,8 @@ export default async function Page({ params }: PageProps) {
             </div>
           </div>
 
-          {/* تلميح تمرير لطيف */}
+          {/* تلميح تمرير لطيف — يظهر فقط عند تعدّد البطاقات */}
+          {testimonials.length > 1 && (
           <div className="mt-4 flex justify-center">
             <div className="flex items-center gap-2 text-gray-400 text-sm">
               <span className="animate-pulse">⟵</span>
@@ -542,8 +524,20 @@ export default async function Page({ params }: PageProps) {
               <span className="animate-pulse">⟶</span>
             </div>
           </div>
+          )}
+
+          {/* دعوة لمشاركة الرأي */}
+          <div className="mt-8 flex justify-center">
+            <LocalizedClientLink
+              href="/reviews/new"
+              className="inline-flex min-h-11 items-center justify-center gap-2 rounded-xl border border-neoly-primary/20 bg-white px-6 py-2.5 font-bold text-neoly-primary transition hover:bg-neoly-primary hover:text-white"
+            >
+              شارك رأيك
+            </LocalizedClientLink>
+          </div>
         </div>
       </section>
+      )}
     </main>
   )
 }
