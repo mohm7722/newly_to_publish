@@ -7,6 +7,10 @@ import {
 } from "../../../../../../modules/settlement"
 import { isSupported, loadFxConfig, type CurrencyCode } from "../../../../../../lib/fx"
 import { nocache } from "../../../../../utils/nocache"
+import {
+  requestActorId,
+  resolveOrderAccess,
+} from "../../../../../utils/cart-access"
 
 /**
  * Store order settlement-commit route (Requirements 7.9, 8.2, 8.3).
@@ -91,10 +95,19 @@ export async function POST(
       return
     }
 
-    const actorId = (
-      req as unknown as { auth_context?: { actor_id?: string } }
-    ).auth_context?.actor_id
-    if (!actorId || order.customer_id !== actorId) {
+    // Guest checkout is supported: an order placed without an account is
+    // authorized by possession of the order id (the same model Medusa applies
+    // to `GET /store/orders/:id`). An order owned by a registered customer
+    // still requires that customer's authenticated session.
+    const access = await resolveOrderAccess(
+      req.scope,
+      {
+        id: String(order.id),
+        customer_id: (order.customer_id as string | null) ?? null,
+      },
+      requestActorId(req)
+    )
+    if (!access.authorized) {
       res.status(403).json({ ok: false, message: "order access denied" })
       return
     }
