@@ -4,6 +4,7 @@ import type ShippingCityModuleService from "../../modules/shipping-city/service"
 import { PAYMENTS_MODULE } from "../../modules/payments"
 import type PaymentsModuleService from "../../modules/payments/service"
 import { resolveCartAccess, type AccessScope } from "./cart-access"
+import { cityShippingLabel } from "../../lib/checkout/city-shipping-price"
 
 export type CheckoutScope = { resolve: <T = unknown>(key: string) => T }
 
@@ -92,7 +93,9 @@ export async function reconcileCheckoutShipping(
     return { cart, city, shippingMethod: null }
   }
 
-  const label = `توصيل إلى ${city.city}`
+  // Single source of truth for the delivery label (shared with the
+  // `refreshCartItemsWorkflow` hook that repairs drift on every cart refresh).
+  const label = cityShippingLabel(city.city)
   const cartService = scope.resolve<any>(Modules.CART)
   await cartService.updateShippingMethods([
     {

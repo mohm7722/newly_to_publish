@@ -2,6 +2,7 @@ import type { MedusaRequest, MedusaResponse } from "@medusajs/framework/http"
 import { Modules } from "@medusajs/framework/utils"
 import { SHIPPING_CITY_MODULE } from "../../../modules/shipping-city"
 import type ShippingCityModuleService from "../../../modules/shipping-city/service"
+import { cityShippingLabel } from "../../../lib/checkout/city-shipping-price"
 
 /** Normalize a string for case-insensitive, trimmed comparison. */
 function norm(s?: string): string {
@@ -81,8 +82,8 @@ export const GET = async (req: MedusaRequest, res: MedusaResponse) => {
             ...baseOption,
             amount,
             price_type: "flat",
-            name: `توصيل إلى ${city.city}`,
-            title: `توصيل إلى ${city.city}`,
+            name: cityShippingLabel(city.city),
+            title: cityShippingLabel(city.city),
           },
         ]
       } else {

@@ -10,6 +10,7 @@ import {
   resolveActiveCheckoutCity,
 } from "../../../../utils/checkout"
 import { requestActorId, resolveCartAccess } from "../../../../utils/cart-access"
+import { cityShippingLabel } from "../../../../../lib/checkout/city-shipping-price"
 
 type AddressInput = Record<string, unknown>
 type CityShippingBody = {
@@ -88,7 +89,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
     // onto the cart: Medusa validates the value and derives the guest customer
     // from it, so an absent email is simply left untouched.
     const email = text(body.cart?.email)
-    const cityShippingLabel = `توصيل إلى ${city.city}`
+    const cityLabel = cityShippingLabel(city.city)
 
     await updateCartWorkflow(req.scope).run({
       input: {
@@ -104,7 +105,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
           ...(currentCart.metadata ?? {}),
           city_id: city.id,
           city_name: city.city,
-          city_shipping_label: cityShippingLabel,
+          city_shipping_label: cityLabel,
           city_version: Date.now(),
           payment_method: null,
         },
