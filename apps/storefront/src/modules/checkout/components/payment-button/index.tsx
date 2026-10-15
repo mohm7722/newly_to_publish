@@ -17,11 +17,13 @@ const PaymentButton: React.FC<PaymentButtonProps> = ({
   cart,
   "data-testid": dataTestId,
 }) => {
+  // Email is optional for guest checkout, so it is not part of readiness. The
+  // required contact data is the name and phone captured on the address.
   const notReady =
     !cart ||
-    !cart.shipping_address ||
+    !cart.shipping_address?.address_1 ||
+    !cart.shipping_address?.phone ||
     !cart.billing_address ||
-    !cart.email ||
     (cart.shipping_methods?.length ?? 0) < 1
 
   const paymentSession = cart.payment_collection?.payment_sessions?.[0]

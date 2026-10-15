@@ -3,21 +3,23 @@ import { deleteProof, openProofStream, storeProof } from "../../../../../../lib/
 import { MANUAL_TRANSFER_MODULE } from "../../../../../../modules/manual-transfer"
 import type ManualTransferModuleService from "../../../../../../modules/manual-transfer/service"
 import {
+  accessibleOrder,
+  expectedSubmissionOwner,
   handleManualTransferError,
-  ownedOrder,
-  requireCustomer,
 } from "../../../../../utils/manual-transfer"
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
-  const customerId = requireCustomer(req, res)
-  if (!customerId) return
   try {
-    if (!(await ownedOrder(req, req.params.id, customerId))) {
+    const accessed = await accessibleOrder(req, req.params.id)
+    if (!accessed) {
       return res.status(404).json({ message: "الطلب غير موجود" })
     }
     const service = req.scope.resolve<ManualTransferModuleService>(MANUAL_TRANSFER_MODULE)
     const submission = await service.getByOrder(req.params.id)
-    if (!submission || submission.customer_id !== customerId) {
+    if (
+      !submission ||
+      submission.customer_id !== expectedSubmissionOwner(submission, accessed.access)
+    ) {
       return res.status(404).json({ message: "الإشعار غير موجود" })
     }
     res.setHeader("Content-Type", submission.proof_mime_type)
@@ -32,16 +34,20 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
 }
 
 export async function POST(req: MedusaRequest, res: MedusaResponse) {
-  const customerId = requireCustomer(req, res)
-  if (!customerId) return
   let stored: Awaited<ReturnType<typeof storeProof>> | null = null
   try {
-    if (!(await ownedOrder(req, req.params.id, customerId))) {
+    const accessed = await accessibleOrder(req, req.params.id)
+    if (!accessed) {
       return res.status(404).json({ message: "الطلب غير موجود" })
     }
-    stored = await storeProof(req)
     const service = req.scope.resolve<ManualTransferModuleService>(MANUAL_TRANSFER_MODULE)
-    const result = await service.resubmitOrderProof(req.params.id, customerId, stored)
+    const existing = await service.getByOrder(req.params.id)
+    if (!existing) {
+      return res.status(404).json({ message: "لا يوجد تحويل بنكي لهذا الطلب" })
+    }
+    const ownerId = expectedSubmissionOwner(existing, accessed.access)
+    stored = await storeProof(req)
+    const result = await service.resubmitOrderProof(req.params.id, ownerId, stored)
     stored = null
     await deleteProof(result.replacedStorageKey)
     return res.status(200).json({ ok: true })

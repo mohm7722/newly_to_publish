@@ -3,6 +3,7 @@ import { SHIPPING_CITY_MODULE } from "../../modules/shipping-city"
 import type ShippingCityModuleService from "../../modules/shipping-city/service"
 import { PAYMENTS_MODULE } from "../../modules/payments"
 import type PaymentsModuleService from "../../modules/payments/service"
+import { resolveCartAccess, type AccessScope } from "./cart-access"
 
 export type CheckoutScope = { resolve: <T = unknown>(key: string) => T }
 
@@ -149,17 +150,31 @@ export async function validateCheckoutCart(
   if (!cart) {
     throw new MedusaError(MedusaError.Types.NOT_FOUND, "السلة غير موجودة")
   }
-  if (!actorId || !cart.customer_id || cart.customer_id !== actorId) {
+
+  // Guest checkout is supported, so a cart without a registered owner is
+  // authorized by possession of the cart id. Only a cart that belongs to a
+  // registered customer requires a matching authenticated actor.
+  const access = await resolveCartAccess(
+    scope as AccessScope,
+    { id: cart.id, customer_id: cart.customer_id },
+    actorId ?? null
+  )
+  if (!access.authorized) {
     throw new MedusaError(
       MedusaError.Types.UNAUTHORIZED,
       "لا يمكنك إكمال سلة لا تخص حسابك"
     )
   }
 
+  // Required contact data for a guest order: a full name (stored across
+  // first/last name) and a phone number. Email is optional, and `last_name` may
+  // legitimately be empty when the shopper entered a single-word name.
   const address = cart.shipping_address
   if (
-    !cart.email || !address?.first_name || !address?.last_name ||
-    !address?.address_1 || !address?.phone || !address?.country_code
+    !address?.first_name ||
+    !address?.address_1 ||
+    !address?.phone ||
+    !address?.country_code
   ) {
     throw new MedusaError(MedusaError.Types.INVALID_DATA, "بيانات الشحن غير مكتملة")
   }

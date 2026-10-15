@@ -7,16 +7,13 @@ import type ManualTransferModuleService from "../../../../../../modules/manual-t
 import { PAYMENTS_MODULE } from "../../../../../../modules/payments"
 import type PaymentsModuleService from "../../../../../../modules/payments/service"
 import {
+  accessibleCart,
   handleManualTransferError,
   isTransferCurrency,
-  ownedCart,
   publicSubmission,
-  requireCustomer,
 } from "../../../../../utils/manual-transfer"
 
 export async function POST(req: MedusaRequest, res: MedusaResponse) {
-  const customerId = requireCustomer(req, res)
-  if (!customerId) return
   let stored: Awaited<ReturnType<typeof storeProof>> | null = null
   try {
     const bankAccountId = String(req.query.bank_account_id || "")
@@ -24,8 +21,12 @@ export async function POST(req: MedusaRequest, res: MedusaResponse) {
     if (!bankAccountId || !isTransferCurrency(currencyCode)) {
       return res.status(400).json({ message: "الحساب البنكي والعملة مطلوبان" })
     }
-    const cart = await ownedCart(req, req.params.id, customerId)
-    if (!cart) return res.status(404).json({ message: "السلة غير موجودة" })
+    // Guest checkout is supported: the cart id authorizes an account-less
+    // shopper, while a registered customer's cart still needs a matching actor.
+    const accessed = await accessibleCart(req, req.params.id)
+    if (!accessed) return res.status(404).json({ message: "السلة غير موجودة" })
+    const { cart, access } = accessed
+    const customerId = access.ownerId
 
     const payments = req.scope.resolve<PaymentsModuleService>(PAYMENTS_MODULE)
     const accounts = await payments.listBankAccounts({ is_active: true, currency_code: currencyCode })

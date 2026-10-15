@@ -96,9 +96,11 @@ const getProfileCompletion = (customer: HttpTypes.StoreCustomer | null) => {
   if (!customer) return 0
   let count = 0
   if (customer.email) count++
-  if (customer.first_name && customer.last_name) count++
+  if (customer.first_name) count++
   if (customer.phone) count++
-  if (customer.addresses?.some((address) => address.is_default_billing)) count++
+  // A saved address counts regardless of any billing/shipping flag: the same
+  // address is used for delivery and for the invoice.
+  if ((customer.addresses?.length ?? 0) > 0) count++
   return (count / 4) * 100
 }
 

@@ -2,6 +2,7 @@
 
 import { sdk } from "@lib/config"
 import medusaError from "@lib/util/medusa-error"
+import { splitFullName } from "@lib/util/full-name"
 import { HttpTypes } from "@medusajs/types"
 import { FetchError } from "@medusajs/js-sdk"
 import { revalidateTag } from "next/cache"
@@ -274,25 +275,47 @@ export async function transferCart() {
   revalidateTag(cartCacheTag)
 }
 
+/**
+ * The address shape the account address book collects.
+ *
+ * It is intentionally identical to the single checkout address: full name,
+ * phone, governorate (`city`) and the detailed address. There are no separate
+ * billing fields, no company, no second address line and no postal code —
+ * the invoice is issued with this same address, and Yemen has no postal codes
+ * in practical use.
+ */
+const readAddressForm = (formData: FormData) => {
+  const { first_name, last_name } = splitFullName(
+    formData.get("full_name") as string
+  )
+
+  return {
+    first_name,
+    last_name,
+    address_1: ((formData.get("address_1") as string) ?? "").trim(),
+    city: ((formData.get("city") as string) ?? "").trim(),
+    country_code: ((formData.get("country_code") as string) ?? "").trim(),
+    phone: ((formData.get("phone") as string) ?? "").trim(),
+  }
+}
+
 export const addCustomerAddress = async (
   currentState: Record<string, unknown>,
   formData: FormData
 ): Promise<{ success: boolean; error: string | null }> => {
-  const isDefaultBilling = (currentState.isDefaultBilling as boolean) || false
   const isDefaultShipping = (currentState.isDefaultShipping as boolean) || false
 
+  const parsed = readAddressForm(formData)
+
+  if (!parsed.first_name) {
+    return { success: false, error: "الاسم الكامل مطلوب" }
+  }
+
   const address = {
-    first_name: formData.get("first_name") as string,
-    last_name: formData.get("last_name") as string,
-    company: formData.get("company") as string,
-    address_1: formData.get("address_1") as string,
-    address_2: formData.get("address_2") as string,
-    city: formData.get("city") as string,
-    postal_code: formData.get("postal_code") as string,
-    province: formData.get("province") as string,
-    country_code: formData.get("country_code") as string,
-    phone: formData.get("phone") as string,
-    is_default_billing: isDefaultBilling,
+    ...parsed,
+    // The invoice always uses the delivery address, so a saved address serves
+    // both purposes rather than being flagged as one or the other.
+    is_default_billing: isDefaultShipping,
     is_default_shipping: isDefaultShipping,
   }
 
@@ -342,23 +365,13 @@ export const updateCustomerAddress = async (
     return { success: false, error: "معرّف العنوان مطلوب" }
   }
 
-  const address = {
-    first_name: formData.get("first_name") as string,
-    last_name: formData.get("last_name") as string,
-    company: formData.get("company") as string,
-    address_1: formData.get("address_1") as string,
-    address_2: formData.get("address_2") as string,
-    city: formData.get("city") as string,
-    postal_code: formData.get("postal_code") as string,
-    province: formData.get("province") as string,
-    country_code: formData.get("country_code") as string,
-  } as HttpTypes.StoreUpdateCustomerAddress
+  const parsed = readAddressForm(formData)
 
-  const phone = formData.get("phone") as string
-
-  if (phone) {
-    address.phone = phone
+  if (!parsed.first_name) {
+    return { success: false, error: "الاسم الكامل مطلوب" }
   }
+
+  const address = parsed as HttpTypes.StoreUpdateCustomerAddress
 
   const headers = {
     ...(await getAuthHeaders()),

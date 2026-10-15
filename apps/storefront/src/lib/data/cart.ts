@@ -17,6 +17,7 @@ import {
 import { getRegion } from "./regions"
 import { getLocale } from "./locale-actions"
 import { listCities } from "./cities"
+import { splitFullName } from "@lib/util/full-name"
 
 const cartCreationPromises = new Map<
   string,
@@ -456,8 +457,22 @@ export async function reconcileCartCityShipping(cartId: string) {
     .catch(medusaError)
 }
 
-// TODO: Pass a POJO instead of a form entity here
+/**
+ * Persist the one checkout address (step 1) and move on to delivery.
+ *
+ * Guest checkout: no account is required. The only mandatory fields are the
+ * full name, the phone number, the governorate and the detailed address.
+ * The email is optional and is only written onto the cart when supplied —
+ * Medusa validates the value and derives the guest customer from it, so an
+ * empty string must never be sent.
+ *
+ * The invoice is issued with exactly this address, so `billing_address` is a
+ * copy of `shipping_address`. There is no separate billing address anywhere in
+ * the flow.
+ */
 export async function setAddresses(currentState: unknown, formData: FormData) {
+  let countryCode = ""
+
   try {
     if (!formData) {
       throw new Error("تعذر العثور على بيانات العنوان")
@@ -471,41 +486,49 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
     const cityId = String(formData.get("shipping_city_id") ?? "").trim()
     const city = (await listCities()).find((item) => item.id === cityId)
     if (!city) {
-      throw new Error("يرجى اختيار مدينة متاحة للتوصيل")
+      throw new Error("يرجى اختيار المحافظة المتاحة للتوصيل")
     }
+
+    const fullName = String(formData.get("shipping_address.full_name") ?? "")
+    const { first_name, last_name } = splitFullName(fullName)
+    if (!first_name) {
+      throw new Error("يرجى إدخال الاسم الكامل")
+    }
+
+    const phone = String(formData.get("shipping_address.phone") ?? "").trim()
+    if (!phone) {
+      throw new Error("يرجى إدخال رقم الهاتف")
+    }
+
+    const address_1 = String(
+      formData.get("shipping_address.address_1") ?? ""
+    ).trim()
+    if (!address_1) {
+      throw new Error("يرجى إدخال العنوان التفصيلي")
+    }
+
+    countryCode = String(
+      formData.get("shipping_address.country_code") ?? ""
+    ).trim()
+
+    const shippingAddress = {
+      first_name,
+      last_name,
+      address_1,
+      address_2: "",
+      country_code: countryCode,
+      province: "",
+      phone,
+    }
+
+    const email = String(formData.get("email") ?? "").trim()
 
     const data = {
-      shipping_address: {
-        first_name: formData.get("shipping_address.first_name"),
-        last_name: formData.get("shipping_address.last_name"),
-        address_1: formData.get("shipping_address.address_1"),
-        address_2: "",
-        company: formData.get("shipping_address.company"),
-        postal_code: formData.get("shipping_address.postal_code"),
-        country_code: formData.get("shipping_address.country_code"),
-        province: formData.get("shipping_address.province"),
-        phone: formData.get("shipping_address.phone"),
-      },
-      email: formData.get("email"),
+      shipping_address: shippingAddress,
+      // The invoice carries the same address the shopper entered.
+      billing_address: shippingAddress,
+      ...(email ? { email } : {}),
     } as any
-
-    const sameAsBilling = formData.get("same_as_billing")
-    if (sameAsBilling === "on") data.billing_address = data.shipping_address
-
-    if (sameAsBilling !== "on") {
-      data.billing_address = {
-        first_name: formData.get("billing_address.first_name"),
-        last_name: formData.get("billing_address.last_name"),
-        address_1: formData.get("billing_address.address_1"),
-        address_2: "",
-        company: formData.get("billing_address.company"),
-        postal_code: formData.get("billing_address.postal_code"),
-        city: formData.get("billing_address.city"),
-        country_code: formData.get("billing_address.country_code"),
-        province: formData.get("billing_address.province"),
-        phone: formData.get("billing_address.phone"),
-      }
-    }
 
     const headers = {
       ...(await getAuthHeaders()),
@@ -532,9 +555,7 @@ export async function setAddresses(currentState: unknown, formData: FormData) {
     return e?.message || "تعذر حفظ عنوان الشحن"
   }
 
-  redirect(
-    `/${formData.get("shipping_address.country_code")}/checkout?step=delivery`
-  )
+  redirect(`/${countryCode}/checkout?step=delivery`)
 }
 
 /**

@@ -34,15 +34,10 @@ export default async function Checkout({ params, searchParams }: CheckoutProps) 
     redirect(`/${countryCode}/checkout?step=address`)
   }
 
-  // Server-side guard: only authenticated customers may reach checkout. This
-  // blocks direct navigation to `/checkout` (not just hiding the cart button)
-  // and enforces the "no order without an account" rule together with the
-  // backend cart-complete middleware.
+  // Guest checkout: no account is required to reach or complete checkout. The
+  // customer is still loaded (when signed in) so saved addresses and profile
+  // details can prefill the form.
   const customer = await retrieveCustomer().catch(() => null)
-
-  if (!customer) {
-    redirect(`/${countryCode}/account?redirect=/checkout`)
-  }
 
   const cart = await retrieveCart()
 
@@ -50,8 +45,12 @@ export default async function Checkout({ params, searchParams }: CheckoutProps) 
     return notFound()
   }
 
+  // Email is optional for guests, so address completeness is judged on the
+  // address itself plus the selected governorate.
   const hasAddress = Boolean(
-    cart.shipping_address && cart.email && cart.metadata?.city_id
+    cart.shipping_address?.address_1 &&
+      cart.shipping_address?.phone &&
+      cart.metadata?.city_id
   )
   const hasShippingMethod = (cart.shipping_methods?.length ?? 0) > 0
   const pendingPaymentSession =

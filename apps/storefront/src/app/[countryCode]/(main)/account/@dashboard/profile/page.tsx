@@ -2,11 +2,10 @@ import { Metadata } from "next"
 import { UserRound } from "lucide-react"
 
 import ProfilePhone from "@modules/account/components/profile-phone"
-import ProfileBillingAddress from "@modules/account/components/profile-billing-address"
 import ProfileEmail from "@modules/account/components/profile-email"
 import ProfileName from "@modules/account/components/profile-name"
+import LocalizedClientLink from "@modules/common/components/localized-client-link"
 import { notFound } from "next/navigation"
-import { listRegions } from "@lib/data/regions"
 import { retrieveCustomer } from "@lib/data/customer"
 
 export const metadata: Metadata = {
@@ -16,9 +15,8 @@ export const metadata: Metadata = {
 
 export default async function Profile() {
   const customer = await retrieveCustomer()
-  const regions = await listRegions()
 
-  if (!customer || !regions) notFound()
+  if (!customer) notFound()
 
   return (
     <div className="w-full" data-testid="profile-page-wrapper">
@@ -30,7 +28,7 @@ export default async function Profile() {
           <p className="text-sm font-bold text-[#B3174A]">إعدادات الحساب</p>
           <h1 className="mt-1 text-2xl font-bold text-[#270830] sm:text-3xl">الملف الشخصي</h1>
           <p className="mt-2 max-w-2xl text-sm leading-7 text-gray-500">
-            حدّث اسمك ورقم هاتفك وعنوان الفوترة. بريد تسجيل الدخول ظاهر للقراءة فقط حفاظًا على أمان الحساب.
+            حدّث اسمك ورقم هاتفك. بريد تسجيل الدخول ظاهر للقراءة فقط حفاظًا على أمان الحساب.
           </p>
         </div>
       </div>
@@ -38,8 +36,18 @@ export default async function Profile() {
         <ProfileName customer={customer} />
         <ProfileEmail customer={customer} />
         <ProfilePhone customer={customer} />
-        <ProfileBillingAddress customer={customer} regions={regions} />
       </div>
+      <p className="mt-6 rounded-2xl bg-[#fcfafc] px-4 py-3 text-sm leading-7 text-gray-500">
+        العناوين تُدار من صفحة{" "}
+        <LocalizedClientLink
+          href="/account/addresses"
+          className="font-bold text-[#67285A] underline"
+        >
+          عناويني
+        </LocalizedClientLink>
+        . تُستخدم نفس العناوين للتوصيل وإصدار الفاتورة، فلا توجد حقول فوترة
+        منفصلة.
+      </p>
     </div>
   )
 }

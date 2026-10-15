@@ -4,7 +4,7 @@ import {
   SETTLEMENT_MODULE,
   type SettlementModuleService,
 } from "../../../../../modules/settlement"
-import { actorId, ownedOrder } from "../../../../utils/manual-transfer"
+import { accessibleOrder } from "../../../../utils/manual-transfer"
 
 /**
  * Store order settlement route (Requirements 8.2, 8.3).
@@ -13,9 +13,10 @@ import { actorId, ownedOrder } from "../../../../utils/manual-transfer"
  *  - `OPTIONS /store/orders/:id/settlement` → CORS preflight support.
  *
  * `/store/*` is gated by the framework's publishable-key + CORS middleware. On
- * top of that, the read is restricted to the signed-in customer who owns the
- * order: an anonymous request gets `401`, and an order that does not exist or
- * belongs to another customer gets `404` (so order ids cannot be probed).
+ * top of that, the read is restricted to whoever may access the order: an order
+ * owned by a registered customer requires that customer's session, while a
+ * guest order (placed without an account) is readable by the holder of the
+ * order id. Anything else gets `404`, so order ids cannot be probed.
  *
  * For the owner, the response mirrors the Old Store shape for behavior parity
  * (Requirement 8.4): a found settlement is returned as `{ ok: true, ...settlement }`,
@@ -33,14 +34,8 @@ export async function GET(
     return
   }
 
-  const customerId = actorId(req)
-  if (!customerId) {
-    res.status(401).json({ ok: false, message: "authentication required" })
-    return
-  }
-
   try {
-    if (!(await ownedOrder(req, orderId, customerId))) {
+    if (!(await accessibleOrder(req, orderId))) {
       res.status(404).json({ ok: false, message: "order not found" })
       return
     }

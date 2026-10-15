@@ -9,6 +9,7 @@ import {
   reconcileCheckoutShipping,
   resolveActiveCheckoutCity,
 } from "../../../../utils/checkout"
+import { requestActorId, resolveCartAccess } from "../../../../utils/cart-access"
 
 type AddressInput = Record<string, unknown>
 type CityShippingBody = {
@@ -18,7 +19,6 @@ type CityShippingBody = {
   cart?: {
     email?: unknown
     shipping_address?: AddressInput
-    billing_address?: AddressInput
   }
 }
 
@@ -35,8 +35,6 @@ const sanitizeAddress = (
     last_name: text(input.last_name),
     address_1: text(input.address_1),
     address_2: text(input.address_2),
-    company: text(input.company),
-    postal_code: text(input.postal_code),
     city: cityName,
     country_code: text(input.country_code).toLowerCase(),
     province: text(input.province),
@@ -53,10 +51,15 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
     if (!currentCart) {
       return res.status(404).json({ error: "السلة غير موجودة" })
     }
-    const actorId = (
-      req as unknown as { auth_context?: { actor_id?: string } }
-    ).auth_context?.actor_id
-    if (!actorId || currentCart.customer_id !== actorId) {
+    // Guest checkout: a cart without a registered owner is authorized by
+    // possession of the cart id. A signed-in customer's cart still requires a
+    // matching actor.
+    const access = await resolveCartAccess(
+      req.scope,
+      { id: currentCart.id, customer_id: currentCart.customer_id },
+      requestActorId(req)
+    )
+    if (!access.authorized) {
       return res.status(401).json({ error: "لا يمكنك تعديل سلة لا تخص حسابك" })
     }
 
@@ -73,14 +76,18 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
       return res.status(200).json({ success: true, cart: result.cart })
     }
 
-  const shippingAddress = sanitizeAddress(
+    // One address only. The invoice is issued with exactly the address the
+    // shopper entered, so the billing address is always a copy of the shipping
+    // address — there is no separate billing address to collect or store.
+    const shippingAddress = sanitizeAddress(
       body.cart?.shipping_address,
       city.city
     )
-    const billingAddress = sanitizeAddress(
-      body.cart?.billing_address,
-      text(body.cart?.billing_address?.city) || city.city
-    )
+    const billingAddress = shippingAddress
+    // Email is optional for guest checkout. An empty string must not be written
+    // onto the cart: Medusa validates the value and derives the guest customer
+    // from it, so an absent email is simply left untouched.
+    const email = text(body.cart?.email)
     const cityShippingLabel = `توصيل إلى ${city.city}`
 
     await updateCartWorkflow(req.scope).run({
@@ -88,7 +95,7 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
         id: cartId,
         ...(body.cart
           ? {
-              email: text(body.cart.email),
+              ...(email ? { email } : {}),
               shipping_address: shippingAddress,
               billing_address: billingAddress,
             }

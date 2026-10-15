@@ -10,6 +10,7 @@ import {
   reconcileCheckoutShipping,
   resolveActiveCheckoutCity,
 } from "../../../../utils/checkout"
+import { requestActorId, resolveCartAccess } from "../../../../utils/cart-access"
 
 type ShippingMethodsBody = { option_id?: string }
 
@@ -29,10 +30,14 @@ export const POST = async (req: MedusaRequest, res: MedusaResponse) => {
     if (!cart) {
       return res.status(404).json({ message: "السلة غير موجودة" })
     }
-    const actorId = (
-      req as unknown as { auth_context?: { actor_id?: string } }
-    ).auth_context?.actor_id
-    if (!actorId || cart.customer_id !== actorId) {
+    // Guest carts are authorized by possession of the cart id; a registered
+    // customer's cart still requires a matching authenticated actor.
+    const access = await resolveCartAccess(
+      req.scope,
+      { id: cart.id, customer_id: cart.customer_id },
+      requestActorId(req)
+    )
+    if (!access.authorized) {
       return res.status(401).json({ message: "لا يمكنك تعديل سلة لا تخص حسابك" })
     }
     const city = await resolveActiveCheckoutCity(req.scope, {

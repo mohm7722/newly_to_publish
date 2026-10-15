@@ -26,12 +26,9 @@ function getCheckoutStep(cart: HttpTypes.StoreCart) {
 const Summary = ({ cart, customer }: SummaryProps) => {
   const step = getCheckoutStep(cart)
 
-  // Guests are sent to login/register first (with a redirect back to checkout).
-  // This mirrors the server-side guard in `checkout/page.tsx` so the UI never
-  // implies guest checkout is possible.
-  const checkoutHref = customer
-    ? `/checkout?step=${step}`
-    : `/account?redirect=/checkout`
+  // Guest checkout: everyone goes straight to checkout. Signing in is an
+  // optional convenience (saved addresses, order history), never a gate.
+  const checkoutHref = `/checkout?step=${step}`
 
   return (
     <div className="flex flex-col gap-y-5">
@@ -44,9 +41,14 @@ const Summary = ({ cart, customer }: SummaryProps) => {
       <CartTotals totals={cart} />
       <LocalizedClientLink href={checkoutHref} data-testid="checkout-button">
         <Button className="h-12 w-full rounded-xl bg-[#67285A] font-bold text-white hover:bg-[#56214c]">
-          {customer ? "إتمام الشراء" : "تسجيل الدخول لإكمال الطلب"}
+          إتمام الشراء
         </Button>
       </LocalizedClientLink>
+      {!customer && (
+        <p className="text-center text-xs leading-6 text-gray-500">
+          لا حاجة لإنشاء حساب — أكمل طلبك بالاسم ورقم الهاتف فقط.
+        </p>
+      )}
     </div>
   )
 }

@@ -6,20 +6,36 @@ import { useActionState, useEffect, useState } from "react"
 
 import { addCustomerAddress } from "@lib/data/customer"
 import useToggleState from "@lib/hooks/use-toggle-state"
+import type { StoreCity } from "@lib/data/cities"
 import { HttpTypes } from "@medusajs/types"
 import CountrySelect from "@modules/checkout/components/country-select"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
 import Input from "@modules/common/components/input"
+import NativeSelect from "@modules/common/components/native-select"
 import Modal from "@modules/common/components/modal"
 
+/**
+ * Add a saved address.
+ *
+ * Collects exactly the same fields as checkout — full name, phone, governorate,
+ * detailed address — so a saved address can prefill checkout in one click with
+ * nothing left over. There are no separate billing fields: the invoice is
+ * issued with the delivery address.
+ */
 const AddAddress = ({
   region,
+  cities,
 }: {
   region: HttpTypes.StoreRegion
   addresses: HttpTypes.StoreCustomerAddress[]
+  cities: StoreCity[]
 }) => {
   const [successState, setSuccessState] = useState(false)
   const { state, open, close: closeModal } = useToggleState(false)
+
+  const countries = region?.countries ?? []
+  const singleCountryCode =
+    countries.length === 1 ? countries[0]?.iso_2 ?? "" : ""
 
   const [formState, formAction] = useActionState(addCustomerAddress, {
     success: false,
@@ -63,77 +79,71 @@ const AddAddress = ({
         <form action={formAction}>
           <Modal.Body>
             <div className="flex flex-col gap-y-3 text-right">
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <Input
-                  label="الاسم الأول"
-                  name="first_name"
-                  required
-                  autoComplete="given-name"
-                  data-testid="first-name-input"
-                />
-                <Input
-                  label="اسم العائلة"
-                  name="last_name"
-                  required
-                  autoComplete="family-name"
-                  data-testid="last-name-input"
-                />
-              </div>
               <Input
-                label="الشركة"
-                name="company"
-                autoComplete="organization"
-                data-testid="company-input"
-              />
-              <Input
-                label="العنوان"
-                name="address_1"
+                label="الاسم الكامل"
+                name="full_name"
                 required
-                autoComplete="address-line1"
-                data-testid="address-1-input"
-              />
-              <Input
-                label="الشقة، الجناح، إلخ."
-                name="address_2"
-                autoComplete="address-line2"
-                data-testid="address-2-input"
-              />
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <Input
-                  label="الرمز البريدي"
-                  name="postal_code"
-                  required
-                  autoComplete="postal-code"
-                  data-testid="postal-code-input"
-                />
-                <Input
-                  label="المدينة"
-                  name="city"
-                  required
-                  autoComplete="address-level2"
-                  data-testid="city-input"
-                />
-              </div>
-              <Input
-                label="المحافظة / الولاية"
-                name="province"
-                autoComplete="address-level1"
-                data-testid="state-input"
-              />
-              <CountrySelect
-                region={region}
-                name="country_code"
-                required
-                autoComplete="country"
-                data-testid="country-select"
+                autoComplete="name"
+                data-testid="full-name-input"
               />
               <Input
                 label="رقم الهاتف"
                 name="phone"
                 type="tel"
+                inputMode="tel"
+                required
                 autoComplete="tel"
                 data-testid="phone-input"
               />
+              <div>
+                <label
+                  htmlFor="add-address-city"
+                  className="mb-2 block text-sm font-medium text-[#270830]"
+                >
+                  المحافظة
+                </label>
+                <NativeSelect
+                  id="add-address-city"
+                  name="city"
+                  required
+                  disabled={cities.length === 0}
+                  placeholder={
+                    cities.length
+                      ? "اختر المحافظة"
+                      : "لا توجد محافظات توصيل متاحة حالياً"
+                  }
+                  className="h-12 rounded-xl bg-white"
+                  data-testid="city-select"
+                >
+                  {cities.map((city) => (
+                    <option key={city.id} value={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
+                </NativeSelect>
+              </div>
+              <Input
+                label="العنوان التفصيلي"
+                name="address_1"
+                required
+                autoComplete="street-address"
+                data-testid="address-1-input"
+              />
+              {singleCountryCode ? (
+                <input
+                  type="hidden"
+                  name="country_code"
+                  value={singleCountryCode}
+                />
+              ) : (
+                <CountrySelect
+                  region={region}
+                  name="country_code"
+                  required
+                  autoComplete="country"
+                  data-testid="country-select"
+                />
+              )}
             </div>
             {formState.error && (
               <div

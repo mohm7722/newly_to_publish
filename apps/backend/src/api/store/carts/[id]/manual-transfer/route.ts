@@ -4,18 +4,16 @@ import { MANUAL_TRANSFER_MODULE } from "../../../../../modules/manual-transfer"
 import type ManualTransferModuleService from "../../../../../modules/manual-transfer/service"
 import { deleteProof } from "../../../../../lib/manual-transfer/storage"
 import {
+  accessibleCart,
   handleManualTransferError,
-  ownedCart,
   publicSubmission,
-  requireCustomer,
 } from "../../../../utils/manual-transfer"
 import { nocache } from "../../../../utils/nocache"
 
 export async function GET(req: MedusaRequest, res: MedusaResponse) {
-  const customerId = requireCustomer(req, res)
-  if (!customerId) return
   try {
-    if (!(await ownedCart(req, req.params.id, customerId))) {
+    const accessed = await accessibleCart(req, req.params.id)
+    if (!accessed) {
       return res.status(404).json({ message: "السلة غير موجودة" })
     }
     const service = req.scope.resolve<ManualTransferModuleService>(MANUAL_TRANSFER_MODULE)
@@ -30,13 +28,12 @@ export async function GET(req: MedusaRequest, res: MedusaResponse) {
 }
 
 export async function DELETE(req: MedusaRequest, res: MedusaResponse) {
-  const customerId = requireCustomer(req, res)
-  if (!customerId) return
   try {
-    const cart = await ownedCart(req, req.params.id, customerId)
-    if (!cart) return res.status(404).json({ message: "السلة غير موجودة" })
+    const accessed = await accessibleCart(req, req.params.id)
+    if (!accessed) return res.status(404).json({ message: "السلة غير موجودة" })
+    const { cart, access } = accessed
     const service = req.scope.resolve<ManualTransferModuleService>(MANUAL_TRANSFER_MODULE)
-    const removed = await service.removeCartSubmission(req.params.id, customerId)
+    const removed = await service.removeCartSubmission(req.params.id, access.ownerId)
     await deleteProof(removed?.proof_storage_key)
     const { manual_transfer_currency, manual_transfer_bank_account_id, ...metadata } = cart.metadata ?? {}
     const cartService = req.scope.resolve(Modules.CART) as any

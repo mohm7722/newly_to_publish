@@ -5,11 +5,14 @@ import {
   updateCustomerAddress,
 } from "@lib/data/customer"
 import useToggleState from "@lib/hooks/use-toggle-state"
+import { joinFullName } from "@lib/util/full-name"
+import type { StoreCity } from "@lib/data/cities"
 import { PencilSquare as Edit, Trash } from "@medusajs/icons"
 import { HttpTypes } from "@medusajs/types"
 import CountrySelect from "@modules/checkout/components/country-select"
 import { SubmitButton } from "@modules/checkout/components/submit-button"
 import Input from "@modules/common/components/input"
+import NativeSelect from "@modules/common/components/native-select"
 import Modal from "@modules/common/components/modal"
 import { Button, Heading, Text, clx } from "@modules/common/components/ui"
 import Spinner from "@modules/common/icons/spinner"
@@ -18,17 +21,29 @@ import React, { useActionState, useEffect, useState } from "react"
 type EditAddressProps = {
   region: HttpTypes.StoreRegion
   address: HttpTypes.StoreCustomerAddress
+  cities: StoreCity[]
   isActive?: boolean
 }
 
+/**
+ * Edit a saved address.
+ *
+ * Mirrors the checkout address form exactly: full name, phone, governorate,
+ * detailed address. No separate billing fields — the invoice uses this address.
+ */
 const EditAddress: React.FC<EditAddressProps> = ({
   region,
   address,
+  cities,
   isActive = false,
 }) => {
   const [removing, setRemoving] = useState(false)
   const [successState, setSuccessState] = useState(false)
   const { state, open, close: closeModal } = useToggleState(false)
+
+  const countries = region?.countries ?? []
+  const singleCountryCode =
+    countries.length === 1 ? countries[0]?.iso_2 ?? "" : ""
 
   const [formState, formAction] = useActionState(updateCustomerAddress, {
     success: false,
@@ -59,6 +74,8 @@ const EditAddress: React.FC<EditAddressProps> = ({
     setRemoving(false)
   }
 
+  const fullName = joinFullName(address.first_name, address.last_name)
+
   return (
     <>
       <div
@@ -75,28 +92,16 @@ const EditAddress: React.FC<EditAddressProps> = ({
             className="text-right text-base-semi"
             data-testid="address-name"
           >
-            {address.first_name} {address.last_name}
+            {fullName}
           </Heading>
-          {address.company && (
-            <Text
-              className="txt-compact-small text-ui-fg-base"
-              data-testid="address-company"
-            >
-              {address.company}
-            </Text>
-          )}
           <Text className="mt-2 flex flex-col text-right text-base-regular">
-            <span data-testid="address-address">
-              {address.address_1}
-              {address.address_2 && <span>، {address.address_2}</span>}
-            </span>
-            <span data-testid="address-postal-city">
-              {address.postal_code}، {address.city}
-            </span>
-            <span data-testid="address-province-country">
-              {address.province && `${address.province}، `}
-              {address.country_code?.toUpperCase()}
-            </span>
+            <span data-testid="address-address">{address.address_1}</span>
+            <span data-testid="address-city">{address.city}</span>
+            {address.phone && (
+              <span data-testid="address-phone">
+                <bdi dir="ltr">{address.phone}</bdi>
+              </span>
+            )}
           </Text>
         </div>
         <div className="flex flex-wrap items-center gap-4 border-t border-gray-100 pt-4">
@@ -127,87 +132,82 @@ const EditAddress: React.FC<EditAddressProps> = ({
           <input type="hidden" name="addressId" value={address.id} />
           <Modal.Body>
             <div className="grid grid-cols-1 gap-y-3 text-right">
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <Input
-                  label="الاسم الأول"
-                  name="first_name"
-                  required
-                  autoComplete="given-name"
-                  defaultValue={address.first_name || undefined}
-                  data-testid="first-name-input"
-                />
-                <Input
-                  label="اسم العائلة"
-                  name="last_name"
-                  required
-                  autoComplete="family-name"
-                  defaultValue={address.last_name || undefined}
-                  data-testid="last-name-input"
-                />
-              </div>
               <Input
-                label="الشركة"
-                name="company"
-                autoComplete="organization"
-                defaultValue={address.company || undefined}
-                data-testid="company-input"
-              />
-              <Input
-                label="العنوان"
-                name="address_1"
+                label="الاسم الكامل"
+                name="full_name"
                 required
-                autoComplete="address-line1"
-                defaultValue={address.address_1 || undefined}
-                data-testid="address-1-input"
-              />
-              <Input
-                label="الشقة، الجناح، إلخ."
-                name="address_2"
-                autoComplete="address-line2"
-                defaultValue={address.address_2 || undefined}
-                data-testid="address-2-input"
-              />
-              <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-                <Input
-                  label="الرمز البريدي"
-                  name="postal_code"
-                  required
-                  autoComplete="postal-code"
-                  defaultValue={address.postal_code || undefined}
-                  data-testid="postal-code-input"
-                />
-                <Input
-                  label="المدينة"
-                  name="city"
-                  required
-                  autoComplete="address-level2"
-                  defaultValue={address.city || undefined}
-                  data-testid="city-input"
-                />
-              </div>
-              <Input
-                label="المحافظة / الولاية"
-                name="province"
-                autoComplete="address-level1"
-                defaultValue={address.province || undefined}
-                data-testid="state-input"
-              />
-              <CountrySelect
-                name="country_code"
-                region={region}
-                required
-                autoComplete="country"
-                defaultValue={address.country_code || undefined}
-                data-testid="country-select"
+                autoComplete="name"
+                defaultValue={fullName || undefined}
+                data-testid="full-name-input"
               />
               <Input
                 label="رقم الهاتف"
                 name="phone"
                 type="tel"
+                inputMode="tel"
+                required
                 autoComplete="tel"
                 defaultValue={address.phone || undefined}
                 data-testid="phone-input"
               />
+              <div>
+                <label
+                  htmlFor={`edit-address-city-${address.id}`}
+                  className="mb-2 block text-sm font-medium text-[#270830]"
+                >
+                  المحافظة
+                </label>
+                <NativeSelect
+                  id={`edit-address-city-${address.id}`}
+                  name="city"
+                  required
+                  disabled={cities.length === 0}
+                  defaultValue={address.city || undefined}
+                  placeholder={
+                    cities.length
+                      ? "اختر المحافظة"
+                      : "لا توجد محافظات توصيل متاحة حالياً"
+                  }
+                  className="h-12 rounded-xl bg-white"
+                  data-testid="city-select"
+                >
+                  {cities.map((city) => (
+                    <option key={city.id} value={city.name}>
+                      {city.name}
+                    </option>
+                  ))}
+                  {/* Keep a legacy/unlisted city selectable so editing an older
+                      address does not silently drop its stored value. */}
+                  {address.city &&
+                    !cities.some((city) => city.name === address.city) && (
+                      <option value={address.city}>{address.city}</option>
+                    )}
+                </NativeSelect>
+              </div>
+              <Input
+                label="العنوان التفصيلي"
+                name="address_1"
+                required
+                autoComplete="street-address"
+                defaultValue={address.address_1 || undefined}
+                data-testid="address-1-input"
+              />
+              {singleCountryCode ? (
+                <input
+                  type="hidden"
+                  name="country_code"
+                  value={address.country_code || singleCountryCode}
+                />
+              ) : (
+                <CountrySelect
+                  name="country_code"
+                  region={region}
+                  required
+                  autoComplete="country"
+                  defaultValue={address.country_code || undefined}
+                  data-testid="country-select"
+                />
+              )}
             </div>
             {formState.error && (
               <div

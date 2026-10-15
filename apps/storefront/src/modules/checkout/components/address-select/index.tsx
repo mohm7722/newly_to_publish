@@ -82,17 +82,13 @@ const AddressSelect = ({
                         {address.first_name} {address.last_name}
                       </span>
                       <div className="mt-2 flex flex-col text-right text-base-regular">
-                        <span>
-                          {address.address_1}
-                          {address.address_2 && (
-                            <span>, {address.address_2}</span>
-                          )}
-                        </span>
+                        <span>{address.address_1}</span>
                         <span>{address.city}</span>
-                        <span>
-                          {address.province && `${address.province}, `}
-                          {address.country_code?.toUpperCase()}
-                        </span>
+                        {address.phone && (
+                          <span>
+                            <bdi dir="ltr">{address.phone}</bdi>
+                          </span>
+                        )}
                       </div>
                     </div>
                   </div>

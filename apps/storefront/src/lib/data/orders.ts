@@ -24,12 +24,17 @@ function isUnauthorizedError(error: unknown): boolean {
   )
 }
 
+/**
+ * Retrieve a single order.
+ *
+ * Works for guest orders: `GET /store/orders/:id` ships without an
+ * authentication middleware in Medusa, so an account-less shopper can still
+ * see the confirmation page for the order they just placed (the order id is an
+ * unguessable identifier). Auth headers are forwarded when the shopper happens
+ * to be signed in.
+ */
 export const retrieveOrder = async (id: string) => {
   const authHeaders = await getAuthHeaders()
-
-  if (!("authorization" in authHeaders)) {
-    return null
-  }
 
   return sdk.client
     .fetch<HttpTypes.StoreOrderResponse>(`/store/orders/${id}`, {

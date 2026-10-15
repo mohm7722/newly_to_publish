@@ -178,9 +178,7 @@ const Shipping: React.FC<ShippingProps> = ({
           )}
         </Heading>
         {!isOpen &&
-          cart?.shipping_address &&
-          cart?.billing_address &&
-          cart?.email && (
+          cart?.shipping_address?.address_1 && (
             <Text>
               <button
                 type="button"

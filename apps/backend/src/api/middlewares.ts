@@ -11,31 +11,33 @@ import type { RequestPermissionContext } from "./utils/rbac"
 import { resolveRoutePermission } from "./utils/route-permissions"
 import { MANUAL_TRANSFER_MODULE } from "../modules/manual-transfer"
 import type ManualTransferModuleService from "../modules/manual-transfer/service"
+import { requestActorId, resolveCartAccess } from "./utils/cart-access"
 
 /**
- * Authenticated-checkout enforcement (applied to `POST /store/carts/:id/complete`).
+ * Cart-completion authorization (applied to `POST /store/carts/:id/complete`).
  *
- * The storefront requires customers to sign in before checking out, but the
- * default `/store/carts/:id/complete` route accepts guest carts. This
- * middleware closes that gap on the server: it loads the cart being completed
- * and rejects the request with `401` unless the cart is owned by a *registered*
- * customer (`customer_id` set and `customer.has_account === true`). Guest carts
- * — whether they have no customer at all or only a transient guest customer
- * (`has_account: false`) — are refused, so no order can be created without an
- * account regardless of how the request reaches the API.
+ * **Guest checkout is supported**: a shopper may place an order without an
+ * account, so the absence of a `customer_id` on the cart is no longer a reason
+ * to refuse completion. What this middleware still enforces is that a cart
+ * which belongs to a *registered* customer can only be completed by that
+ * customer — signing in keeps protecting a cart from being completed by anyone
+ * else who learns its id.
  *
- * Fails closed: any error resolving the cart/customer results in a `401` rather
- * than silently allowing a guest completion.
+ * Guest carts (no customer at all, or only the transient guest customer Medusa
+ * attaches when an optional email is written onto the cart) are authorized by
+ * possession of the cart id, which is the same model Medusa's own
+ * `/store/carts/:id` routes use.
+ *
+ * Fails closed on an unresolvable cart: a cart that cannot be read cannot be
+ * proven safe to complete.
  */
-async function requireRegisteredCustomerForCheckout(
+async function authorizeCartCompletion(
   req: MedusaRequest,
   res: MedusaResponse,
   next: MedusaNextFunction
 ): Promise<void> {
-  const deny = (): void => {
-    res.status(401).json({
-      message: "يجب تسجيل الدخول أو إنشاء حساب لإكمال الطلب",
-    })
+  const deny = (message: string): void => {
+    res.status(401).json({ message })
   }
 
   // Extract the cart id from the request path (`/store/carts/:id/complete`).
@@ -46,7 +48,7 @@ async function requireRegisteredCustomerForCheckout(
   const cartId = path.match(/\/store\/carts\/([^/?]+)\/complete/)?.[1]
 
   if (!cartId) {
-    deny()
+    deny("تعذر التحقق من السلة المطلوب إتمامها")
     return
   }
 
@@ -56,18 +58,19 @@ async function requireRegisteredCustomerForCheckout(
       select: ["id", "customer_id"],
     })
 
-    if (!cart?.customer_id) {
-      deny()
+    if (!cart) {
+      deny("السلة غير موجودة")
       return
     }
 
-    const customerService = req.scope.resolve(Modules.CUSTOMER)
-    const customer = await customerService.retrieveCustomer(cart.customer_id, {
-      select: ["id", "has_account"],
-    })
+    const access = await resolveCartAccess(
+      req.scope,
+      { id: cart.id, customer_id: cart.customer_id },
+      requestActorId(req)
+    )
 
-    if (!customer?.has_account) {
-      deny()
+    if (!access.authorized) {
+      deny("لا يمكنك إكمال سلة تخص حسابًا آخر")
       return
     }
 
@@ -82,7 +85,7 @@ async function requireRegisteredCustomerForCheckout(
       }`
     )
     // Fail closed.
-    deny()
+    deny("تعذر التحقق من السلة المطلوب إتمامها")
     return
   }
 }
@@ -218,11 +221,20 @@ async function requireManualTransferProofForCheckout(
     const metadata = (cart?.metadata ?? {}) as Record<string, unknown>
     if (metadata.payment_method !== "manual_bank_transfer") return next()
 
+    // Guest carts store a cart-derived owner token on the submission instead of
+    // a customer id, so compare against the resolved owner rather than
+    // `cart.customer_id` (which is null/transient for guests).
+    const access = await resolveCartAccess(
+      req.scope,
+      { id: cart.id, customer_id: cart.customer_id },
+      requestActorId(req)
+    )
+
     const service = req.scope.resolve<ManualTransferModuleService>(MANUAL_TRANSFER_MODULE)
     const submission = await service.getByCart(cartId)
     const valid =
       submission?.status === "submitted" &&
-      submission.customer_id === cart.customer_id &&
+      submission.customer_id === access.ownerId &&
       submission.currency_code === metadata.manual_transfer_currency &&
       submission.bank_account_id === metadata.manual_transfer_bank_account_id &&
       Boolean(submission.proof_storage_key)
@@ -389,7 +401,7 @@ export default defineMiddlewares({
       matcher: "/store/carts/:id/complete",
       method: ["POST"],
       middlewares: [
-        requireRegisteredCustomerForCheckout,
+        authorizeCartCompletion,
         requireManualTransferProofForCheckout,
       ],
     },

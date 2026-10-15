@@ -4,6 +4,7 @@ import { MapPin } from "lucide-react"
 import AddressBook from "@modules/account/components/address-book"
 import { getRegion } from "@lib/data/regions"
 import { retrieveCustomer } from "@lib/data/customer"
+import { listCities } from "@lib/data/cities"
 
 export const metadata: Metadata = { title: "العناوين", description: "عرض عناوينك" }
 
@@ -11,6 +12,7 @@ export default async function Addresses(props: { params: Promise<{ countryCode: 
   const { countryCode } = await props.params
   const customer = await retrieveCustomer()
   const region = await getRegion(countryCode)
+  const cities = await listCities()
   if (!customer || !region) notFound()
 
   return (
@@ -19,11 +21,14 @@ export default async function Addresses(props: { params: Promise<{ countryCode: 
         <span className="flex h-12 w-12 shrink-0 items-center justify-center rounded-2xl bg-blue-50 text-blue-600"><MapPin className="h-6 w-6" /></span>
         <div>
           <p className="text-sm font-bold text-[#B3174A]">بيانات التوصيل</p>
-          <h1 className="mt-1 text-2xl font-bold text-[#270830] sm:text-3xl">عناوين الشحن</h1>
-          <p className="mt-2 max-w-2xl text-sm leading-7 text-gray-500">أضف عناوينك وحدّثها لتختار منها بسرعة عند إتمام الطلب.</p>
+          <h1 className="mt-1 text-2xl font-bold text-[#270830] sm:text-3xl">عناويني</h1>
+          <p className="mt-2 max-w-2xl text-sm leading-7 text-gray-500">
+            أضف عناوينك وحدّثها لتختار منها بسرعة عند إتمام الطلب. تُستخدم نفس
+            العناوين للتوصيل وإصدار الفاتورة، فلا توجد عناوين فوترة منفصلة.
+          </p>
         </div>
       </div>
-      <AddressBook customer={customer} region={region} />
+      <AddressBook customer={customer} region={region} cities={cities} />
     </div>
   )
 }
